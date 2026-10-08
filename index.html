@@ -1,363 +1,1515 @@
-
 <!doctype html>
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f5eff8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5b2ca">
   <meta name="robots" content="noindex,nofollow">
   <title>Для Алины · Наша маленькая история</title>
 
   <style>
     :root {
-      --ink: #43264c;
-      --muted: #816b87;
-      --purple: #76447f;
+      color-scheme: light;
+      --ink: #52243a;
+      --muted: #895369;
+      --pink: #dc397b;
+      --deep: #b51e5b;
+      --paper: #fff8fa;
+      --line: #f0cad9;
     }
 
     * { box-sizing: border-box; }
+
+    [hidden] { display: none !important; }
+
+    html {
+      min-width: 280px;
+      background: #f5b2ca;
+    }
 
     body {
       margin: 0;
       min-height: 100vh;
       min-height: 100svh;
-      padding: 28px 20px;
-      display: grid;
-      place-items: center;
+      padding: 28px 18px 24px;
+      padding-top: max(28px, env(safe-area-inset-top));
+      padding-bottom: max(24px, env(safe-area-inset-bottom));
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow-x: hidden;
       color: var(--ink);
-      background:
-        radial-gradient(ellipse at top left, #e6d7ee, transparent 60%),
-        radial-gradient(ellipse at bottom right, #f6dce7, transparent 60%),
-        #f5eff8;
-      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: #f5b2ca;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .frame { width: min(100%, 510px); }
+    button, input { font: inherit; }
 
-    header {
+    button {
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    button, a, input {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #9b2054;
+      outline-offset: 4px;
+    }
+
+    ::selection {
+      color: #59112e;
+      background: #ffc7dc;
+    }
+
+    .svg-library {
+      position: absolute;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .backdrop,
+    .leopard-world,
+    .ambient,
+    .celebration {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .backdrop {
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .leopard-world { opacity: .53; }
+
+    .backdrop::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(
+          ellipse at 50% 42%,
+          #ffe7f0d9 0%,
+          #ffc6dc66 47%,
+          #ed85b11a 80%
+        );
+    }
+
+    .ambient {
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .celebration {
+      z-index: 5;
+      overflow: hidden;
+    }
+
+    .frame {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 510px;
+    }
+
+    .masthead {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 0 7px 22px;
-      color: var(--muted);
+      gap: 12px;
+      margin: 0 6px 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
       font-size: 10px;
+      font-weight: 700;
       letter-spacing: .15em;
       text-transform: uppercase;
     }
 
-    .tiny-heart { font-size: 20px; color: #9a6ba3; }
+    .brand svg {
+      width: 22px;
+      height: 22px;
+      flex: none;
+      fill: var(--deep);
+    }
+
+    .chapter {
+      padding: 8px 12px;
+      border: 1px solid #fff3f8;
+      border-radius: 30px;
+      background: #fff2f7e8;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .11em;
+      white-space: nowrap;
+    }
 
     .card {
       position: relative;
-      padding: 40px 34px;
       overflow: hidden;
+      padding: 23px 36px 21px;
+      border: 1px solid #fff;
+      border-radius: 32px;
       text-align: center;
-      background: #fffafcef;
-      border: 1px solid white;
-      border-radius: 30px;
-      box-shadow: 0 24px 90px #6a3f7717;
+      background:
+        linear-gradient(
+          145deg,
+          #fffafc 0%,
+          #fff5f9 70%,
+          #ffeaf3 100%
+        );
+      box-shadow:
+        0 28px 75px #68253f26,
+        0 5px 15px #9b366119,
+        inset 0 0 0 6px #ffffff60;
     }
 
     .card::before {
       content: "";
       position: absolute;
-      inset: 10px;
-      border: 1px solid #eadfeb;
-      border-radius: 22px;
+      inset: 9px;
+      border: 1px solid #f1cfdd;
+      border-radius: 24px;
       pointer-events: none;
+      z-index: 0;
+    }
+
+    .card-ribbon {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 7px;
+      opacity: .85;
+    }
+
+    .card-toolbar {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 38px;
+    }
+
+    .edition {
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .motion-toggle {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      margin-right: -7px;
+      padding: 0;
+      border: 1px solid transparent;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--deep);
+      transition: background .2s;
+    }
+
+    .motion-toggle svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .motion-toggle[aria-pressed="false"] {
+      color: #895369;
+      background: #f8e6ed;
     }
 
     .panel {
       position: relative;
-      animation: appear .65s ease both;
+      z-index: 1;
+      animation: panel-in .65s cubic-bezier(.2, .7, .25, 1) both;
     }
 
-    [hidden] { display: none !important; }
+    .panel.leaving {
+      animation: panel-out .19s ease both;
+      pointer-events: none;
+    }
+
+    .hero {
+      position: relative;
+      height: 198px;
+      margin: -6px -12px 6px;
+      pointer-events: none;
+    }
+
+    .hero-glow {
+      position: absolute;
+      left: 50%;
+      top: 13px;
+      width: 228px;
+      height: 170px;
+      margin-left: -114px;
+      background:
+        radial-gradient(
+          ellipse,
+          #ffc3db99,
+          #ffeaf200 70%
+        );
+    }
+
+    .hero-orbit {
+      position: absolute;
+      left: 50%;
+      top: 24px;
+      width: 248px;
+      height: 125px;
+      margin-left: -124px;
+      border: 1px solid #e8a4b966;
+      border-radius: 50%;
+      transform: rotate(-18deg);
+    }
+
+    .heart-main {
+      position: absolute;
+      width: 174px;
+      height: 174px;
+      left: 50%;
+      top: 1px;
+      margin-left: -87px;
+      animation: main-float 4.8s ease-in-out infinite;
+    }
+
+    .heart-main > svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-8deg);
+    }
+
+    .heart-side {
+      position: absolute;
+      width: 82px;
+      height: 82px;
+      top: 72px;
+      left: calc(50% - 139px);
+      animation: side-float 5.5s ease-in-out infinite;
+    }
+
+    .heart-side > svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-23deg);
+    }
+
+    .heart-outline {
+      position: absolute;
+      top: 46px;
+      left: calc(50% + 72px);
+      width: 59px;
+      height: 59px;
+      animation: side-float 4.5s ease-in-out -1.8s infinite;
+    }
+
+    .heart-outline > svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(19deg);
+    }
+
+    .bridge {
+      position: absolute;
+      width: 252px;
+      height: 53px;
+      left: 50%;
+      bottom: 0;
+      margin-left: -126px;
+    }
+
+    .water {
+      animation: water 5s ease-in-out infinite;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      color: #c22b64;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    .sparkle.s1 {
+      top: 29px;
+      left: calc(50% - 108px);
+      width: 15px;
+      height: 15px;
+    }
+
+    .sparkle.s2 {
+      top: 121px;
+      left: calc(50% + 103px);
+      animation-delay: -1.4s;
+    }
+
+    .sparkle.s3 {
+      top: 6px;
+      left: calc(50% + 73px);
+      width: 9px;
+      height: 9px;
+      animation-delay: -.8s;
+    }
 
     .eyebrow {
-      margin: 24px 0 15px;
-      color: var(--muted);
+      margin: 5px auto 17px;
+      color: var(--deep);
       font-size: 10px;
-      letter-spacing: .22em;
+      font-weight: 700;
+      letter-spacing: .2em;
       text-transform: uppercase;
     }
 
-    h1, h2 {
-      margin: 0 0 20px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-weight: 400;
-      font-size: clamp(34px, 8vw, 47px);
-      line-height: 1.14;
-      letter-spacing: -.035em;
+    .dedication {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 15px;
+      border: 1px solid #f1cede;
+      border-radius: 30px;
+      background: #ffedf4;
     }
 
-    h1 em, h2 em { color: #97629b; }
+    .dedication svg {
+      width: 10px;
+      height: 10px;
+    }
+
+    h1, h2 {
+      margin: 0 0 19px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 39px;
+      font-size: clamp(31px, 8.3vw, 39px);
+      font-weight: 400;
+      line-height: 1.13;
+      letter-spacing: -.045em;
+    }
+
+    h1 em, h2 em {
+      color: #c12865;
+      font-weight: 400;
+    }
+
+    h1 em {
+      display: block;
+      margin-top: 2px;
+    }
+
+    h1:focus, h2:focus {
+      outline: none;
+    }
 
     p {
-      max-width: 340px;
-      margin: 0 auto 25px;
+      max-width: 350px;
+      margin: 0 auto 23px;
       color: var(--muted);
-      font-size: 14px;
-      line-height: 1.85;
-    }
-
-    .art {
-      display: block;
-      width: 100%;
-      height: 150px;
-      margin: 4px auto 10px;
-    }
-
-    .water { animation: ripple 4s ease-in-out infinite; }
-
-    .bridge-heart {
-      transform-origin: 180px 35px;
-      animation: heartbeat 2.7s ease-in-out infinite;
+      font-size: 13px;
+      line-height: 1.8;
     }
 
     .primary {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      overflow: hidden;
       width: 100%;
-      min-height: 54px;
-      padding: 17px 20px;
-      border: 0;
-      border-radius: 15px;
-      background: var(--purple);
+      min-height: 57px;
+      padding: 17px 16px;
+      border: 1px solid #ffffff45;
+      border-radius: 17px;
+      background:
+        linear-gradient(
+          115deg,
+          #df4081 0%,
+          #d02d71 52%,
+          #b92362 100%
+        );
+      box-shadow:
+        0 9px 22px #cf377a33,
+        inset 0 1px 0 #ffb3d366;
       color: white;
-      box-shadow: 0 7px 20px #76447f20;
-      font: 600 14px system-ui;
-      cursor: pointer;
-      transition: transform .2s, background .2s;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .015em;
+      transition: transform .2s, box-shadow .2s;
     }
 
-    .primary:hover {
-      background: #64386e;
-      transform: translateY(-2px);
+    .primary::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -65%;
+      width: 44%;
+      background:
+        linear-gradient(
+          100deg,
+          transparent,
+          #ffffff2e,
+          transparent
+        );
+      transform: skewX(-20deg);
+      animation: button-glint 7s ease-in-out 1.8s infinite;
     }
 
-    .primary:active { transform: translateY(0); }
-
-    button:focus-visible, input:focus-visible {
-      outline: 3px solid #b697c6;
-      outline-offset: 4px;
+    .primary svg {
+      flex: none;
+      width: 17px;
+      height: 17px;
     }
 
-    .arrow { margin-left: 13px; }
+    .arrow {
+      font-size: 21px;
+      font-weight: 400;
+      line-height: 16px;
+      margin-left: auto;
+    }
+
+    .primary .button-label {
+      margin: 0 auto;
+    }
+
+    .primary:active {
+      transform: scale(.975);
+      box-shadow: 0 4px 12px #cf377a30;
+    }
+
+    @media (hover: hover) {
+      .primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 13px 26px #cf377a44;
+      }
+
+      .text-button:hover {
+        color: #aa154d;
+      }
+
+      .motion-toggle:hover {
+        background: #fbe5ee;
+      }
+    }
 
     .footnote {
-      margin-top: 20px;
-      color: #a08ba4;
-      font-size: 11px;
+      margin-top: 17px;
+      color: #8c566a;
+      font-size: 10px;
       line-height: 1.6;
+      letter-spacing: .03em;
     }
 
     .progress {
+      position: relative;
       display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 6px;
-      margin: 27px 0 8px;
+      gap: 8px;
+      margin: 23px 0 0;
+      height: 16px;
     }
 
     .progress i {
-      width: 24px;
-      height: 3px;
-      background: #e2d5e6;
-      border-radius: 3px;
-      transition: background .3s;
+      display: block;
+      width: 20px;
+      height: 4px;
+      border-radius: 6px;
+      background: #edd1dc;
+      transition: width .4s, background .4s;
     }
 
-    .progress i.on { background: #9870a4; }
+    .progress i.on {
+      background: #d3437d;
+    }
+
+    .progress i.current {
+      width: 34px;
+    }
+
+    .progress .progress-heart {
+      width: 12px;
+      height: 12px;
+      color: #c32c66;
+      margin-left: 3px;
+    }
+
+    .seal {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 128px;
+      height: 124px;
+      margin: 6px auto 12px;
+    }
+
+    .seal::before {
+      content: "";
+      position: absolute;
+      inset: 11px;
+      border-radius: 50%;
+      background: #fce2ed;
+      border: 1px solid #f5bfd4;
+    }
+
+    .seal::after {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: 50%;
+      border: 1px dashed #e7abc2;
+      transform: rotate(-15deg);
+    }
+
+    .seal > svg {
+      position: relative;
+      z-index: 1;
+      width: 100px;
+      height: 100px;
+      animation: gentle-beat 3.2s ease-in-out infinite;
+    }
+
+    .seal .mini-spark {
+      position: absolute;
+      top: 8px;
+      right: -2px;
+      width: 24px;
+      height: 24px;
+      color: #be2461;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    #question h2, #success h2 {
+      margin-bottom: 17px;
+    }
+
+    #question p {
+      margin-bottom: 21px;
+    }
+
+    form {
+      margin-top: 25px;
+    }
 
     label {
       display: block;
-      margin-bottom: 9px;
-      color: var(--muted);
+      margin: 0 0 9px 3px;
+      color: var(--ink);
       text-align: left;
       font-size: 12px;
+      font-weight: 600;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-wrap > svg {
+      position: absolute;
+      top: 19px;
+      right: 17px;
+      width: 19px;
+      height: 19px;
+      color: #c16b90;
+      pointer-events: none;
     }
 
     input {
       display: block;
       width: 100%;
-      padding: 17px 16px;
-      border: 1px solid #ddd0e2;
-      border-radius: 14px;
-      background: white;
+      min-height: 58px;
+      padding: 17px 47px 17px 17px;
+      border: 1px solid #e3b5c8;
+      border-radius: 15px;
+      background: #fffdfd;
+      box-shadow: inset 0 2px 4px #68213d04;
       color: var(--ink);
-      font: 16px system-ui;
+      font-size: 16px;
+      line-height: 1.4;
+      transition: border-color .2s, box-shadow .2s;
+      -webkit-appearance: none;
+      appearance: none;
+      scroll-margin: 20px;
     }
 
-    input::placeholder { color: #b09eb5; }
-    input[aria-invalid="true"] { border-color: #ad6b89; }
+    input::placeholder {
+      color: #a27185;
+      opacity: 1;
+    }
+
+    input:focus {
+      border-color: #d43c7e;
+      box-shadow: 0 0 0 4px #f9deea;
+      outline: none;
+    }
+
+    input[aria-invalid="true"] {
+      border-color: #b11c50;
+    }
 
     .message {
-      min-height: 42px;
-      margin: 8px 0 10px;
-      color: #986077;
+      min-height: 43px;
+      margin: 8px 2px 10px;
+      color: #a02b55;
       text-align: left;
       font-size: 12px;
       line-height: 1.6;
     }
 
     .text-button {
-      padding: 14px 10px;
+      min-height: 44px;
+      padding: 13px 9px;
       border: 0;
+      border-radius: 8px;
       background: transparent;
-      color: var(--muted);
-      font: 12px system-ui;
+      color: #884461;
+      font-size: 12px;
+      line-height: 1.5;
       text-decoration: underline;
       text-underline-offset: 4px;
-      cursor: pointer;
+    }
+
+    #hint-button {
+      margin-top: 9px;
     }
 
     .hint {
-      margin-bottom: 16px;
-      font-size: 13px;
+      padding: 13px 16px;
+      border: 1px dashed #e5b1c6;
+      border-radius: 13px;
+      background: #fff0f6;
+      font-size: 12px;
+      animation: panel-in .35s ease both;
     }
 
-    .seal {
-      display: grid;
-      place-items: center;
-      width: 76px;
-      height: 76px;
-      margin: 5px auto 24px;
-      border: 1px solid #ddcbe5;
-      border-radius: 50%;
-      background: #f0e7f4;
-      color: #9662a2;
-      font: 34px Georgia;
+    #question .hint {
+      margin: 5px auto 0;
+    }
+
+    .code-ticket {
+      position: relative;
+      margin: 24px 0;
+      padding: 22px 10px 23px;
+      border: 1px solid #edb9cf;
+      border-radius: 21px;
+      background: #ffe8f1;
+      overflow: hidden;
+    }
+
+    .ticket-pattern {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: .08;
+      pointer-events: none;
+    }
+
+    .code-ticket .eyebrow {
+      position: relative;
+      margin: 0 0 17px;
+      font-size: 9px;
+      letter-spacing: .16em;
     }
 
     .code {
+      position: relative;
       display: flex;
       justify-content: center;
-      gap: 12px;
-      margin: 22px 0 26px;
+      gap: 11px;
     }
 
     .digit {
       display: grid;
       place-items: center;
-      width: 70px;
-      height: 85px;
-      border: 1px solid #e3d6e9;
+      width: 69px;
+      height: 84px;
+      border: 1px solid #fff;
       border-radius: 14px;
-      background: #f2eaf5;
-      color: #633b70;
-      font: 42px Georgia;
-      animation: appear .7s both;
+      color: #a42158;
+      background: linear-gradient(145deg, #fff, #fff1f6);
+      box-shadow:
+        0 7px 14px #9a31571a,
+        inset 0 -3px 0 #f5d4e1;
+      font: 44px/1 Georgia, serif;
+      animation: digit-in .7s cubic-bezier(.2, .7, .2, 1.15) both;
     }
 
-    .digit:nth-child(2) { animation-delay: .12s; }
-    .digit:nth-child(3) { animation-delay: .24s; }
-
-    .divider {
-      height: 1px;
-      margin: 22px 0;
-      background: linear-gradient(90deg, transparent, #ded0e3, transparent);
+    .digit:nth-child(2) {
+      animation-delay: .13s;
     }
 
-    .success-note { margin-bottom: 0; }
+    .digit:nth-child(3) {
+      animation-delay: .26s;
+    }
+
+    .success-note {
+      margin-bottom: 10px;
+    }
+
+    #restart {
+      margin-top: 1px;
+    }
 
     footer {
-      margin-top: 24px;
-      color: #a28ca8;
+      margin: 19px auto 0;
+      padding: 0 14px;
+      color: #793d58;
       text-align: center;
-      font: italic 13px Georgia;
+      font: italic 12px/1.7 Georgia, "Times New Roman", serif;
     }
 
     .floating-heart {
-      position: fixed;
-      z-index: 2;
-      bottom: -35px;
+      position: absolute;
+      bottom: -110px;
       left: var(--left);
-      color: #b787bd;
-      font-size: var(--size);
+      width: var(--size);
+      height: var(--size);
       opacity: 0;
-      pointer-events: none;
       animation: float-up var(--duration) linear both;
     }
 
-    .shake { animation: shake .3s ease; }
-
-    @keyframes appear {
-      from { opacity: 0; transform: translateY(14px); }
-      to { opacity: 1; transform: translateY(0); }
+    .floating-heart svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(var(--tilt));
     }
 
-    @keyframes ripple {
-      50% { transform: translateX(6px); opacity: .55; }
+    .burst-heart {
+      position: absolute;
+      top: 42%;
+      left: 50%;
+      width: var(--size);
+      height: var(--size);
+      opacity: 0;
+      animation:
+        heart-burst var(--duration)
+        cubic-bezier(.12, .55, .45, 1) both;
     }
 
-    @keyframes heartbeat {
-      50% { transform: scale(1.12); }
+    .burst-heart svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .shake {
+      animation: shake .32s ease;
+    }
+
+    .motion-paused *,
+    .motion-paused *::before,
+    .motion-paused *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    .motion-paused .floating-heart,
+    .motion-paused .burst-heart {
+      display: none;
+    }
+
+    .page-hidden *,
+    .page-hidden *::before,
+    .page-hidden *::after {
+      animation-play-state: paused !important;
+    }
+
+    @keyframes panel-in {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(.985);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes panel-out {
+      to {
+        opacity: 0;
+        transform: translateY(-9px) scale(.985);
+      }
+    }
+
+    @keyframes main-float {
+      0%, 100% {
+        transform: translateY(0) rotate(0);
+      }
+
+      50% {
+        transform: translateY(-9px) rotate(4deg);
+      }
+    }
+
+    @keyframes side-float {
+      0%, 100% {
+        transform: translateY(0) rotate(0);
+      }
+
+      50% {
+        transform: translateY(-7px) rotate(-6deg);
+      }
+    }
+
+    @keyframes gentle-beat {
+      0%, 40%, 70%, 100% {
+        transform: scale(1) rotate(-7deg);
+      }
+
+      52% {
+        transform: scale(1.07) rotate(-4deg);
+      }
+
+      61% {
+        transform: scale(1.02) rotate(-6deg);
+      }
+    }
+
+    @keyframes twinkle {
+      0%, 100% {
+        opacity: .45;
+        transform: scale(.8) rotate(0);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.15) rotate(12deg);
+      }
+    }
+
+    @keyframes water {
+      50% {
+        transform: translateX(5px);
+        opacity: .55;
+      }
+    }
+
+    @keyframes button-glint {
+      0%, 72% {
+        left: -65%;
+      }
+
+      91%, 100% {
+        left: 140%;
+      }
     }
 
     @keyframes float-up {
-      10% { opacity: .45; }
-      80% { opacity: .3; }
-      100% { transform: translateY(-110vh) rotate(35deg); opacity: 0; }
+      8% {
+        opacity: .55;
+      }
+
+      76% {
+        opacity: .4;
+      }
+
+      100% {
+        opacity: 0;
+        transform:
+          translate3d(
+            var(--drift),
+            calc(-100vh - 180px),
+            0
+          )
+          rotate(30deg);
+      }
+    }
+
+    @keyframes heart-burst {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.2);
+      }
+
+      12% {
+        opacity: .95;
+      }
+
+      75% {
+        opacity: .8;
+      }
+
+      100% {
+        opacity: 0;
+        transform:
+          translate(
+            calc(-50% + var(--dx)),
+            calc(-50% + var(--dy))
+          )
+          rotate(var(--spin))
+          scale(.65);
+      }
+    }
+
+    @keyframes digit-in {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(.8) rotate(-5deg);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
     }
 
     @keyframes shake {
-      25% { transform: translateX(-4px); }
-      75% { transform: translateX(4px); }
+      20%, 60% {
+        transform: translateX(-4px);
+      }
+
+      40%, 80% {
+        transform: translateX(4px);
+      }
     }
 
-    @media (max-width: 380px) {
-      .card { padding: 30px 23px; }
-      header { font-size: 9px; }
-      .art { height: 125px; }
+    @media (max-width: 400px) {
+      body {
+        padding-left: 13px;
+        padding-right: 13px;
+        padding-top: 18px;
+        padding-bottom: 19px;
+      }
+
+      .masthead {
+        margin: 0 4px 13px;
+        gap: 7px;
+      }
+
+      .brand {
+        font-size: 8px;
+        letter-spacing: .12em;
+        gap: 6px;
+      }
+
+      .brand svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .chapter {
+        font-size: 9px;
+        padding: 7px 10px;
+      }
+
+      .card {
+        padding: 17px 23px 19px;
+        border-radius: 28px;
+      }
+
+      .card::before {
+        inset: 7px;
+        border-radius: 21px;
+      }
+
+      .hero {
+        height: 184px;
+        margin-top: -7px;
+      }
+
+      .heart-main {
+        width: 163px;
+        height: 163px;
+        margin-left: -81.5px;
+      }
+
+      .heart-side {
+        width: 73px;
+        height: 73px;
+        left: calc(50% - 125px);
+      }
+
+      .heart-outline {
+        width: 53px;
+        height: 53px;
+        left: calc(50% + 67px);
+      }
+
+      .hero-orbit {
+        width: 228px;
+        margin-left: -114px;
+      }
+
+      .edition {
+        font-size: 8px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+
+      .footnote {
+        font-size: 9px;
+      }
+
+      .seal {
+        width: 116px;
+        height: 112px;
+        margin-top: 0;
+      }
+
+      .seal > svg {
+        width: 91px;
+        height: 91px;
+      }
+
+      footer {
+        margin-top: 15px;
+        font-size: 11px;
+      }
+    }
+
+    @media (max-width: 330px) {
+      .card {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      h1, h2 {
+        font-size: 28px;
+      }
+
+      .brand {
+        letter-spacing: .02em;
+      }
+
+      .primary {
+        font-size: 12px;
+        gap: 7px;
+      }
+
+      .digit {
+        width: 61px;
+        height: 76px;
+      }
+
+      .code {
+        gap: 8px;
+      }
+
+      .eyebrow {
+        font-size: 9px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
         animation: none !important;
         transition: none !important;
       }
 
-      .floating-heart { display: none; }
+      .floating-heart,
+      .burst-heart {
+        display: none;
+      }
     }
   </style>
 </head>
 
 <body>
+  <!-- Все рисунки встроены: внешние картинки и библиотеки не нужны. -->
+  <svg
+    class="svg-library"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <defs>
+      <linearGradient
+        id="heart-pink"
+        x1=".16"
+        y1="0"
+        x2=".85"
+        y2="1"
+        gradientUnits="objectBoundingBox"
+      >
+        <stop offset="0" stop-color="#ffb4d5"/>
+        <stop offset=".3" stop-color="#f36ba9"/>
+        <stop offset=".61" stop-color="#df347e"/>
+        <stop offset="1" stop-color="#a4114d"/>
+      </linearGradient>
+
+      <radialGradient
+        id="heart-shine"
+        cx=".27"
+        cy=".23"
+        r=".72"
+      >
+        <stop
+          offset="0"
+          stop-color="#fff4fa"
+          stop-opacity=".86"
+        />
+        <stop
+          offset=".38"
+          stop-color="#ffc7e1"
+          stop-opacity=".2"
+        />
+        <stop
+          offset="1"
+          stop-color="#ffadd1"
+          stop-opacity="0"
+        />
+      </radialGradient>
+
+      <linearGradient
+        id="heart-edge"
+        x1="0"
+        y1="0"
+        x2="1"
+        y2="1"
+      >
+        <stop stop-color="#ffc6df"/>
+        <stop offset="1" stop-color="#ae1b57"/>
+      </linearGradient>
+
+      <!-- Леопардовый узор -->
+      <pattern
+        id="leopard"
+        width="205"
+        height="196"
+        patternUnits="userSpaceOnUse"
+      >
+        <rect
+          width="205"
+          height="196"
+          fill="#efa6c0"
+        />
+
+        <g fill="#df6698">
+          <path d="M23 23C32 11 48 13 52 25S45 49 33 46 13 37 23 23Z"/>
+          <path d="M123 20C133 9 151 17 150 30S131 48 121 39 118 26 123 20Z"/>
+          <path d="M73 75C84 62 104 70 104 86S86 105 73 96 64 84 73 75Z"/>
+          <path d="M172 75C184 66 199 78 194 94S173 108 167 95 165 82 172 75Z"/>
+          <path d="M22 133C30 121 52 123 54 137S42 155 28 151 13 144 22 133Z"/>
+          <path d="M126 137C135 123 150 130 154 143S146 164 132 159 118 148 126 137Z"/>
+          <path d="M73 178C84 168 98 178 97 189S79 205 70 195 65 186 73 178Z"/>
+        </g>
+
+        <g
+          fill="none"
+          stroke="#552238"
+          stroke-width="7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M24 20C13 24 12 38 22 43M34 15C47 12 58 20 56 30M54 39C49 50 35 52 29 46"/>
+          <path d="M125 17C112 20 112 35 122 42M135 14C150 11 158 26 151 36M145 43L135 46"/>
+          <path d="M78 69C64 70 60 82 67 93M89 67C104 65 112 79 106 87M101 99C88 107 76 101 75 99"/>
+          <path d="M173 73C162 75 157 87 165 98M187 70C200 73 203 86 197 91M190 102C181 109 172 104 172 103"/>
+          <path d="M25 125C11 130 11 144 21 150M37 123C53 119 62 133 55 142M48 153C39 159 30 154 28 153"/>
+          <path d="M126 130C115 136 115 150 125 157M138 125C154 125 161 137 157 145M152 157C145 166 138 165 133 163"/>
+          <path d="M73 174C62 178 60 190 68 198M86 171C102 173 106 185 99 194M92 200L84 202"/>
+        </g>
+
+        <g fill="#682b43">
+          <path d="M78 22q10-7 12 1t-9 7Z"/>
+          <path d="M8 81q8-7 11 0t-9 8Z"/>
+          <path d="M141 82q8-5 9 3t-8 6Z"/>
+          <path d="M83 134q9-9 13-1t-7 9Z"/>
+          <path d="M181 149q8-6 9 2t-9 6Z"/>
+          <path d="M31 179q9-4 10 4t-11 3Z"/>
+          <path d="M180 22q8-6 10 1t-8 7Z"/>
+          <path d="M116 109q7-5 8 1t-7 5Z"/>
+        </g>
+      </pattern>
+
+      <pattern
+        id="leopard-small"
+        width="57.4"
+        height="54.88"
+        patternUnits="userSpaceOnUse"
+      >
+        <rect
+          width="57.4"
+          height="54.88"
+          fill="#ffbad5"
+        />
+        <g transform="scale(.28)">
+          <rect
+            width="205"
+            height="196"
+            fill="url(#leopard)"
+          />
+        </g>
+      </pattern>
+
+      <!-- Простое сердце -->
+      <symbol id="heart-shape" viewBox="0 0 100 100">
+        <path d="M50 90C42 84 5 60 5 33 5 9 34 1 50 24 66 1 95 9 95 33 95 60 58 84 50 90Z"/>
+      </symbol>
+
+      <!-- Объёмное розовое сердце -->
+      <symbol id="heart-jewel" viewBox="0 0 100 100">
+        <path
+          d="M50 90C42 84 5 60 5 33 5 9 34 1 50 24 66 1 95 9 95 33 95 60 58 84 50 90Z"
+          fill="url(#heart-pink)"
+          stroke="url(#heart-edge)"
+          stroke-width=".8"
+        />
+        <path
+          d="M50 90C42 84 5 60 5 33 5 9 34 1 50 24 66 1 95 9 95 33 95 60 58 84 50 90Z"
+          fill="url(#heart-shine)"
+        />
+        <path
+          d="M14 33C13 20 27 13 36 19"
+          fill="none"
+          stroke="#fff6fc"
+          stroke-width="4.5"
+          stroke-linecap="round"
+          opacity=".75"
+        />
+        <path
+          d="M65 19C74 13 85 21 86 29"
+          fill="none"
+          stroke="#ffd4e9"
+          stroke-width="2.4"
+          stroke-linecap="round"
+          opacity=".52"
+        />
+        <path
+          d="M85 47C79 61 65 73 53 81"
+          fill="none"
+          stroke="#8c0e42"
+          stroke-width="2"
+          stroke-linecap="round"
+          opacity=".22"
+        />
+      </symbol>
+
+      <!-- Леопардовое сердце -->
+      <symbol id="heart-leopard" viewBox="0 0 100 100">
+        <path
+          d="M50 90C42 84 5 60 5 33 5 9 34 1 50 24 66 1 95 9 95 33 95 60 58 84 50 90Z"
+          fill="url(#leopard-small)"
+          stroke="#ac3665"
+          stroke-width="1.3"
+        />
+        <path
+          d="M14 33C13 20 27 13 36 19"
+          fill="none"
+          stroke="#fff0f8"
+          stroke-width="3.5"
+          stroke-linecap="round"
+          opacity=".75"
+        />
+      </symbol>
+
+      <!-- Контурное сердце -->
+      <symbol id="heart-outline" viewBox="0 0 100 100">
+        <path
+          d="M50 90C42 84 5 60 5 33 5 9 34 1 50 24 66 1 95 9 95 33 95 60 58 84 50 90Z"
+          fill="#fff3f780"
+          stroke="#d64c89"
+          stroke-width="3"
+        />
+      </symbol>
+
+      <symbol id="sparkle" viewBox="0 0 24 24">
+        <path
+          d="M12 1C13.8 8.9 15.1 10.2 23 12 15.1 13.8 13.8 15.1 12 23 10.2 15.1 8.9 13.8 1 12 8.9 10.2 10.2 8.9 12 1Z"
+          fill="currentColor"
+        />
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- Фон -->
+  <div class="backdrop" aria-hidden="true">
+    <svg
+      class="leopard-world"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        width="100%"
+        height="100%"
+        fill="url(#leopard)"
+      />
+    </svg>
+  </div>
+
+  <div
+    class="ambient"
+    id="ambient"
+    aria-hidden="true"
+  ></div>
+
+  <div
+    class="celebration"
+    id="celebration"
+    aria-hidden="true"
+  ></div>
+
   <div class="frame">
-    <header>
-      <span>Маленькая история о нас</span>
-      <span class="tiny-heart" aria-hidden="true">♡</span>
-      <span>Глава 01</span>
+    <header class="masthead">
+      <span class="brand">
+        <svg
+          viewBox="0 0 100 100"
+          aria-hidden="true"
+        >
+          <use href="#heart-shape"/>
+        </svg>
+        Маленькая история о нас
+      </span>
+
+      <span class="chapter">Глава 01</span>
     </header>
 
-    <main class="card">
-      <!-- Приветствие -->
-      <section class="panel" id="welcome" aria-labelledby="welcome-title">
-        <svg class="art" viewBox="0 0 360 160" fill="none" aria-hidden="true">
-          <path
-            d="M58 114h244M79 113V88q101-94 202 0v25M88 112V91q92-83 184 0v21"
-            stroke="#9c79aa"
-            stroke-width="1.7"
-          />
-          <path
-            d="M101 80v33m25-49v49m27-60v60m27-65v65m27-60v60m27-49v49m25-33v33"
-            stroke="#c9afd2"
-            stroke-width="1.3"
-          />
-          <path
-            class="water"
-            d="M79 130q20-7 40 0t40 0t40 0t40 0t40 0M106 144q18-6 36 0t36 0t36 0t36 0"
-            stroke="#c9b4d3"
-            stroke-width="1.5"
-            stroke-linecap="round"
-          />
-          <path
-            class="bridge-heart"
-            d="M180 47s-14-8-14-17c0-8 10-11 14-3 4-8 14-5 14 3 0 9-14 17-14 17Z"
-            fill="#ba91bd"
-          />
-        </svg>
+    <main class="card" id="card">
+      <svg class="card-ribbon" aria-hidden="true">
+        <rect
+          width="100%"
+          height="100%"
+          fill="url(#leopard-small)"
+        />
+      </svg>
 
-        <div class="eyebrow">Для тебя, Алина</div>
+      <div class="card-toolbar">
+        <span class="edition">
+          Одно особенное воспоминание
+        </span>
+
+        <button
+          class="motion-toggle"
+          id="motion-toggle"
+          type="button"
+          aria-label="Выключить анимацию"
+          aria-pressed="true"
+          title="Выключить анимацию"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M9 4v16M15 4v16"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              id="motion-icon"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Приветствие -->
+      <section
+        class="panel"
+        id="welcome"
+        aria-labelledby="welcome-title"
+      >
+        <div class="hero" aria-hidden="true">
+          <div class="hero-glow"></div>
+          <div class="hero-orbit"></div>
+
+          <div class="heart-main">
+            <svg viewBox="0 0 100 100">
+              <use href="#heart-jewel"/>
+            </svg>
+          </div>
+
+          <div class="heart-side">
+            <svg viewBox="0 0 100 100">
+              <use href="#heart-leopard"/>
+            </svg>
+          </div>
+
+          <div class="heart-outline">
+            <svg viewBox="0 0 100 100">
+              <use href="#heart-outline"/>
+            </svg>
+          </div>
+
+          <svg
+            class="sparkle s1"
+            viewBox="0 0 24 24"
+          >
+            <use href="#sparkle"/>
+          </svg>
+
+          <svg
+            class="sparkle s2"
+            viewBox="0 0 24 24"
+          >
+            <use href="#sparkle"/>
+          </svg>
+
+          <svg
+            class="sparkle s3"
+            viewBox="0 0 24 24"
+          >
+            <use href="#sparkle"/>
+          </svg>
+
+          <svg
+            class="bridge"
+            viewBox="0 0 280 62"
+            fill="none"
+          >
+            <ellipse
+              cx="140"
+              cy="12"
+              rx="45"
+              ry="4"
+              fill="#b5487320"
+            />
+
+            <g
+              stroke="#cc789a"
+              stroke-linecap="round"
+              stroke-width="1.25"
+              opacity=".75"
+            >
+              <path d="M27 36H253M46 36V26Q140-17 234 26V36M53 36V30Q140-9 227 30V36"/>
+              <path d="M72 21v15m23-22v22m22-28v28m23-30v30m23-28v28m22-22v22m23-15v15"/>
+              <path
+                class="water"
+                d="M48 47q18-5 36 0t36 0t36 0t36 0t36 0M84 57q14-4 28 0t28 0t28 0t28 0"
+              />
+            </g>
+          </svg>
+        </div>
+
+        <div class="eyebrow dedication">
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <use href="#sparkle"/>
+          </svg>
+
+          Для тебя, Алина
+
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <use href="#sparkle"/>
+          </svg>
+        </div>
 
         <h1 id="welcome-title">
           Некоторые истории<br>
@@ -369,18 +1521,54 @@
           Давай на мгновение туда вернёмся?
         </p>
 
-        <button class="primary" id="start">
-          Начать нашу историю
+        <button
+          class="primary"
+          id="start"
+          type="button"
+        >
+          <svg
+            viewBox="0 0 100 100"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <use href="#heart-shape"/>
+          </svg>
+
+          <span class="button-label">
+            Начать нашу историю
+          </span>
+
           <span class="arrow" aria-hidden="true">→</span>
         </button>
 
-        <div class="footnote">Один ответ. Один маленький секрет.</div>
+        <div class="footnote">
+          Один ответ. Один маленький секрет.
+        </div>
       </section>
 
       <!-- Загадка -->
-      <section class="panel" id="question" hidden aria-labelledby="question-title">
-        <div class="seal" aria-hidden="true">♡</div>
-        <div class="eyebrow">Первое воспоминание</div>
+      <section
+        class="panel"
+        id="question"
+        hidden
+        aria-labelledby="question-title"
+      >
+        <div class="seal" aria-hidden="true">
+          <svg viewBox="0 0 100 100">
+            <use href="#heart-leopard"/>
+          </svg>
+
+          <svg
+            class="mini-spark"
+            viewBox="0 0 24 24"
+          >
+            <use href="#sparkle"/>
+          </svg>
+        </div>
+
+        <div class="eyebrow">
+          Первое воспоминание
+        </div>
 
         <h2 id="question-title" tabindex="-1">
           Где мы впервые<br>
@@ -393,19 +1581,31 @@
         </p>
 
         <form id="answer-form" novalidate>
-          <label for="answer">То самое место</label>
+          <label for="answer">
+            То самое место
+          </label>
 
-          <input
-            id="answer"
-            name="answer"
-            placeholder="Напиши свой ответ…"
-            autocomplete="off"
-            autocapitalize="sentences"
-            enterkeyhint="go"
-            maxlength="120"
-            aria-describedby="feedback"
-            required
-          >
+          <div class="input-wrap">
+            <input
+              id="answer"
+              name="answer"
+              type="text"
+              placeholder="Напиши свой ответ…"
+              autocomplete="off"
+              autocapitalize="sentences"
+              enterkeyhint="go"
+              maxlength="120"
+              aria-describedby="feedback"
+              required
+            >
+
+            <svg
+              viewBox="0 0 100 100"
+              aria-hidden="true"
+            >
+              <use href="#heart-outline"/>
+            </svg>
+          </div>
 
           <div
             class="message"
@@ -415,7 +1615,32 @@
           ></div>
 
           <button class="primary" type="submit">
-            Открыть секрет
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <rect
+                x="5"
+                y="10"
+                width="14"
+                height="11"
+                rx="3"
+                stroke="currentColor"
+                stroke-width="1.6"
+              />
+              <path
+                d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+            </svg>
+
+            <span class="button-label">
+              Открыть секрет
+            </span>
+
             <span class="arrow" aria-hidden="true">→</span>
           </button>
         </form>
@@ -423,6 +1648,7 @@
         <button
           class="text-button"
           id="hint-button"
+          type="button"
           aria-expanded="false"
           aria-controls="hint"
         >
@@ -435,9 +1661,28 @@
       </section>
 
       <!-- Верный ответ -->
-      <section class="panel" id="success" hidden aria-labelledby="success-title">
-        <div class="seal" aria-hidden="true">♥</div>
-        <div class="eyebrow">Ты вспомнила</div>
+      <section
+        class="panel"
+        id="success"
+        hidden
+        aria-labelledby="success-title"
+      >
+        <div class="seal" aria-hidden="true">
+          <svg viewBox="0 0 100 100">
+            <use href="#heart-jewel"/>
+          </svg>
+
+          <svg
+            class="mini-spark"
+            viewBox="0 0 24 24"
+          >
+            <use href="#sparkle"/>
+          </svg>
+        </div>
+
+        <div class="eyebrow">
+          Ты вспомнила
+        </div>
 
         <h2 id="success-title" tabindex="-1">
           Именно там.<br>
@@ -449,204 +1694,589 @@
           А у тебя появился ключ к следующему сюрпризу.
         </p>
 
-        <div class="divider"></div>
-        <div class="eyebrow">Код первой коробочки</div>
-        <div class="code" id="code" role="group" aria-label="Код замка"></div>
+        <div class="code-ticket">
+          <svg
+            class="ticket-pattern"
+            aria-hidden="true"
+          >
+            <rect
+              width="100%"
+              height="100%"
+              fill="url(#leopard-small)"
+            />
+          </svg>
+
+          <div class="eyebrow">
+            Код первой коробочки
+          </div>
+
+          <div
+            class="code"
+            id="code"
+            role="group"
+            aria-label="Код замка"
+          ></div>
+        </div>
 
         <p class="success-note">
           Выставь эти цифры на замке<br>
           и открой свою первую коробочку ♡
         </p>
 
-        <button class="text-button" id="restart">
+        <button
+          class="text-button"
+          id="restart"
+          type="button"
+        >
           Вернуться к началу
         </button>
       </section>
 
-      <div class="progress" id="progress" aria-label="Этап 1 из 3">
-        <i class="on"></i>
+      <div
+        class="progress"
+        id="progress"
+        aria-label="Этап 1 из 3"
+      >
+        <i class="on current"></i>
         <i></i>
         <i></i>
+
+        <svg
+          class="progress-heart"
+          viewBox="0 0 100 100"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <use href="#heart-shape"/>
+        </svg>
       </div>
 
       <noscript>
-        <p>Чтобы открыть секрет, включи JavaScript в браузере.</p>
+        <p>
+          Чтобы открыть секрет, включи JavaScript в браузере.
+        </p>
       </noscript>
     </main>
 
-    <footer>Продолжение нашей истории — в твоих руках.</footer>
+    <footer>
+      Продолжение нашей истории — в твоих руках.
+    </footer>
   </div>
 
   <script>
-    "use strict";
+    (function () {
+      'use strict';
 
-    // Здесь поменяй код первой коробочки.
-    // Оставляй кавычки: например, '007'.
-    const LOCK_CODE = '319';
+      // Код первой коробочки.
+      // Кавычки сохраняют ведущие нули: например, '007'.
+      var LOCK_CODE = '319';
 
-    // В статическом сайте код и ответы видны в исходнике.
-    const ANSWERS = new Set([
-      'мост',
-      'на мосту',
-      'у моста',
-      'возле моста',
-      'мостик',
-      'на мостике',
-      'канал',
-      'на канале',
-      'у канала',
-      'возле канала',
-      'около канала',
-      'на мосту у канала',
-      'на мосту через канал'
-    ]);
+      // В статическом сайте ответы и код видны в исходнике.
+      var ANSWERS = [
+        'мост',
+        'на мосту',
+        'у моста',
+        'возле моста',
+        'мостик',
+        'на мостике',
+        'канал',
+        'на канале',
+        'у канала',
+        'возле канала',
+        'около канала',
+        'на мосту у канала',
+        'на мосту через канал'
+      ];
 
-    const panels = ['welcome', 'question', 'success'];
-    const input = document.getElementById('answer');
-    const feedback = document.getElementById('feedback');
-    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+      var panels = ['welcome', 'question', 'success'];
+      var input = document.getElementById('answer');
+      var feedback = document.getElementById('feedback');
+      var card = document.getElementById('card');
+      var ambient = document.getElementById('ambient');
+      var celebration = document.getElementById('celebration');
+      var motionButton = document.getElementById('motion-toggle');
 
-    function normalizeAnswer(value) {
-      return value
-        .normalize('NFKC')
-        .toLocaleLowerCase('ru')
-        .replace(/ё/g, 'е')
-        .replace(/[.,!?;:«»"“”]/g, '')
-        .replace(/\s+/g, ' ')
-        .trim();
-    }
+      var reducedMotion = window.matchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)')
+        : { matches: false };
 
-    function showPanel(id) {
-      panels.forEach(panel => {
-        document.getElementById(panel).hidden = panel !== id;
-      });
+      var active = 'welcome';
+      var transitioning = false;
+      var userPaused = false;
+      var ambientTimer = null;
+      var burstTimers = [];
+      var svgNS = 'http://www.w3.org/2000/svg';
 
-      const step = panels.indexOf(id);
+      function motionAllowed() {
+        return !reducedMotion.matches && !userPaused;
+      }
 
-      document.querySelectorAll('.progress i').forEach((dot, index) => {
-        dot.classList.toggle('on', index <= step);
-      });
+      function normalizeAnswer(value) {
+        var normalized = value.normalize
+          ? value.normalize('NFKC')
+          : value;
 
-      document.getElementById('progress').setAttribute(
-        'aria-label',
-        `Этап ${step + 1} из 3`
-      );
+        return normalized
+          .toLocaleLowerCase('ru')
+          .replace(/ё/g, 'е')
+          .replace(/[.,!?;:«»"“”]/g, '')
+          .replace(/\s+/g, ' ')
+          .trim();
+      }
 
-      if (id !== 'welcome') {
-        document.getElementById(id + '-title').focus({
-          preventScroll: true
+      function focusWithoutScroll(element) {
+        try {
+          element.focus({ preventScroll: true });
+        } catch (error) {
+          element.focus();
+        }
+      }
+
+      function showPanel(id, callback) {
+        if (transitioning || active === id) {
+          return;
+        }
+
+        transitioning = true;
+
+        var current = document.getElementById(active);
+
+        if (document.activeElement === input) {
+          input.blur();
+        }
+
+        if (motionAllowed()) {
+          current.classList.add('leaving');
+        }
+
+        window.setTimeout(function () {
+          panels.forEach(function (panel) {
+            var element = document.getElementById(panel);
+
+            element.hidden = panel !== id;
+            element.classList.remove('leaving');
+          });
+
+          active = id;
+
+          var step = panels.indexOf(id);
+          var dots = document.querySelectorAll('.progress i');
+
+          for (var i = 0; i < dots.length; i++) {
+            dots[i].classList.toggle('on', i <= step);
+            dots[i].classList.toggle('current', i === step);
+          }
+
+          document.getElementById('progress').setAttribute(
+            'aria-label',
+            'Этап ' + (step + 1) + ' из 3'
+          );
+
+          focusWithoutScroll(
+            document.getElementById(
+              id === 'welcome' ? 'start' : id + '-title'
+            )
+          );
+
+          // После закрытия Android-клавиатуры
+          // возвращаем карточку в поле зрения.
+          if (card.getBoundingClientRect().top < -40) {
+            window.scrollTo(
+              0,
+              Math.max(
+                0,
+                window.pageYOffset +
+                card.getBoundingClientRect().top -
+                16
+              )
+            );
+          }
+
+          transitioning = false;
+
+          if (callback) {
+            callback();
+          }
+        }, motionAllowed() ? 190 : 0);
+      }
+
+      function heartSvg(kind) {
+        var svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('viewBox', '0 0 100 100');
+
+        var use = document.createElementNS(svgNS, 'use');
+
+        use.setAttribute('href', '#' + kind);
+
+        use.setAttributeNS(
+          'http://www.w3.org/1999/xlink',
+          'xlink:href',
+          '#' + kind
+        );
+
+        svg.appendChild(use);
+
+        return svg;
+      }
+
+      function removeParticle(element) {
+        if (element.parentNode) {
+          element.parentNode.removeChild(element);
+        }
+      }
+
+      function attachParticle(element, parent, lifetime) {
+        parent.appendChild(element);
+
+        var cleanupTimer = window.setTimeout(function () {
+          removeParticle(element);
+        }, lifetime);
+
+        element.addEventListener(
+          'animationend',
+          function () {
+            window.clearTimeout(cleanupTimer);
+            removeParticle(element);
+          },
+          { once: true }
+        );
+      }
+
+      function createHeart(initial) {
+        if (
+          !motionAllowed() ||
+          document.hidden ||
+          ambient.childElementCount >= 10
+        ) {
+          return;
+        }
+
+        var heart = document.createElement('span');
+        heart.className = 'floating-heart';
+
+        // Фоновые сердца находятся за карточкой.
+        var side = Math.random() > .5;
+
+        var left = side
+          ? 80 + Math.random() * 15
+          : Math.random() * 15;
+
+        heart.style.setProperty('--left', left + '%');
+
+        heart.style.setProperty(
+          '--size',
+          (29 + Math.random() * 39) + 'px'
+        );
+
+        heart.style.setProperty(
+          '--duration',
+          (10 + Math.random() * 5) + 's'
+        );
+
+        heart.style.setProperty(
+          '--drift',
+          (Math.random() * 50 - 25) + 'px'
+        );
+
+        heart.style.setProperty(
+          '--tilt',
+          (Math.random() * 38 - 19) + 'deg'
+        );
+
+        if (initial) {
+          heart.style.animationDelay =
+            '-' + (1 + Math.random() * 8) + 's';
+        }
+
+        heart.appendChild(
+          heartSvg(
+            Math.random() > .7
+              ? 'heart-leopard'
+              : 'heart-jewel'
+          )
+        );
+
+        attachParticle(heart, ambient, 16000);
+      }
+
+      function clearBurst() {
+        burstTimers.forEach(function (timer) {
+          window.clearTimeout(timer);
         });
-      }
-    }
 
-    function createHeart() {
-      if (
-        reducedMotion.matches ||
-        document.hidden ||
-        document.querySelectorAll('.floating-heart').length >= 24
-      ) {
-        return;
+        burstTimers = [];
+        celebration.textContent = '';
       }
 
-      const heart = document.createElement('span');
+      function celebrate() {
+        clearBurst();
 
-      heart.className = 'floating-heart';
-      heart.textContent = Math.random() > .5 ? '♡' : '♥';
-      heart.setAttribute('aria-hidden', 'true');
+        if (!motionAllowed() || document.hidden) {
+          return;
+        }
 
-      heart.style.setProperty('--left', Math.random() * 100 + 'vw');
-      heart.style.setProperty('--size', 12 + Math.random() * 17 + 'px');
-      heart.style.setProperty('--duration', 6 + Math.random() * 5 + 's');
+        for (var i = 0; i < 22; i++) {
+          burstTimers.push(
+            window.setTimeout(function () {
+              if (
+                !motionAllowed() ||
+                document.hidden ||
+                active !== 'success'
+              ) {
+                return;
+              }
 
-      document.body.append(heart);
+              var heart = document.createElement('span');
+              heart.className = 'burst-heart';
 
-      heart.addEventListener('animationend', () => heart.remove(), {
-        once: true
-      });
+              var angle = Math.random() * Math.PI * 2;
 
-      setTimeout(() => heart.remove(), 12000);
-    }
+              var radius =
+                130 +
+                Math.random() * Math.min(window.innerWidth, 600);
 
-    document.getElementById('start').addEventListener('click', () => {
-      showPanel('question');
-    });
+              heart.style.setProperty(
+                '--size',
+                (22 + Math.random() * 32) + 'px'
+              );
 
-    document.getElementById('hint-button').addEventListener('click', function () {
-      const hint = document.getElementById('hint');
+              heart.style.setProperty(
+                '--dx',
+                (Math.cos(angle) * radius) + 'px'
+              );
 
-      hint.hidden = !hint.hidden;
-      this.setAttribute('aria-expanded', String(!hint.hidden));
-    });
+              heart.style.setProperty(
+                '--dy',
+                (Math.sin(angle) * radius - 60) + 'px'
+              );
 
-    input.addEventListener('input', () => {
-      feedback.textContent = '';
-      input.removeAttribute('aria-invalid');
-    });
+              heart.style.setProperty(
+                '--spin',
+                (Math.random() * 140 - 70) + 'deg'
+              );
 
-    document.getElementById('answer-form').addEventListener('submit', event => {
-      event.preventDefault();
+              heart.style.setProperty(
+                '--duration',
+                (1.8 + Math.random() * .7) + 's'
+              );
 
-      const answer = normalizeAnswer(input.value);
+              heart.appendChild(
+                heartSvg(
+                  Math.random() > .65
+                    ? 'heart-leopard'
+                    : 'heart-jewel'
+                )
+              );
 
-      if (!answer) {
-        feedback.textContent = 'Напиши название места — хотя бы одним словом.';
-        input.setAttribute('aria-invalid', 'true');
-        input.focus();
-        return;
+              attachParticle(heart, celebration, 3000);
+            }, i * 55)
+          );
+        }
       }
 
-      if (!ANSWERS.has(answer)) {
-        feedback.textContent =
-          'Давай вспомним ещё раз. Можно воспользоваться подсказкой ♡';
+      function syncMotion() {
+        var enabled = motionAllowed();
 
-        input.setAttribute('aria-invalid', 'true');
-        input.classList.remove('shake');
+        document.body.classList.toggle(
+          'motion-paused',
+          !enabled
+        );
 
-        // Повторно запускаем анимацию при следующей ошибке.
-        void input.offsetWidth;
-        input.classList.add('shake');
-        input.focus();
-        return;
+        motionButton.setAttribute(
+          'aria-pressed',
+          String(enabled)
+        );
+
+        var label = reducedMotion.matches
+          ? 'Анимация выключена настройками устройства'
+          : (
+              enabled
+                ? 'Выключить анимацию'
+                : 'Включить анимацию'
+            );
+
+        motionButton.setAttribute('aria-label', label);
+        motionButton.setAttribute('title', label);
+        motionButton.disabled = reducedMotion.matches;
+
+        document.getElementById('motion-icon').setAttribute(
+          'd',
+          enabled
+            ? 'M9 4v16M15 4v16'
+            : 'M8 4l12 8-12 8V4Z'
+        );
+
+        window.clearInterval(ambientTimer);
+        ambientTimer = null;
+
+        if (!enabled || document.hidden) {
+          ambient.textContent = '';
+          clearBurst();
+        } else {
+          if (!ambient.childElementCount) {
+            for (var i = 0; i < 4; i++) {
+              createHeart(true);
+            }
+          }
+
+          ambientTimer = window.setInterval(function () {
+            createHeart(false);
+          }, 1900);
+        }
       }
 
-      const code = document.getElementById('code');
-      code.replaceChildren();
-
-      code.setAttribute(
-        'aria-label',
-        'Код замка: ' + LOCK_CODE.split('').join(' ')
+      document.getElementById('start').addEventListener(
+        'click',
+        function () {
+          showPanel('question');
+        }
       );
 
-      for (const digit of LOCK_CODE) {
-        const element = document.createElement('span');
+      document.getElementById('hint-button').addEventListener(
+        'click',
+        function () {
+          var hint = document.getElementById('hint');
 
-        element.className = 'digit';
-        element.textContent = digit;
-        element.setAttribute('aria-hidden', 'true');
+          hint.hidden = !hint.hidden;
 
-        code.append(element);
+          this.setAttribute(
+            'aria-expanded',
+            String(!hint.hidden)
+          );
+        }
+      );
+
+      input.addEventListener('input', function () {
+        feedback.textContent = '';
+        input.removeAttribute('aria-invalid');
+        input.classList.remove('shake');
+      });
+
+      document.getElementById('answer-form').addEventListener(
+        'submit',
+        function (event) {
+          event.preventDefault();
+
+          if (transitioning || active !== 'question') {
+            return;
+          }
+
+          var answer = normalizeAnswer(input.value);
+
+          if (!answer) {
+            feedback.textContent =
+              'Напиши название места — хотя бы одним словом.';
+
+            input.setAttribute('aria-invalid', 'true');
+            input.focus();
+
+            return;
+          }
+
+          if (ANSWERS.indexOf(answer) === -1) {
+            feedback.textContent =
+              'Давай вспомним ещё раз. Можно воспользоваться подсказкой ♡';
+
+            input.setAttribute('aria-invalid', 'true');
+            input.classList.remove('shake');
+
+            // Повторно запускаем анимацию ошибки.
+            void input.offsetWidth;
+
+            input.classList.add('shake');
+            input.focus();
+
+            return;
+          }
+
+          var code = document.getElementById('code');
+
+          code.textContent = '';
+
+          code.setAttribute(
+            'aria-label',
+            'Код замка: ' + LOCK_CODE.split('').join(' ')
+          );
+
+          LOCK_CODE.split('').forEach(function (digit) {
+            var element = document.createElement('span');
+
+            element.className = 'digit';
+            element.textContent = digit;
+            element.setAttribute('aria-hidden', 'true');
+
+            code.appendChild(element);
+          });
+
+          showPanel('success', celebrate);
+        }
+      );
+
+      document.getElementById('restart').addEventListener(
+        'click',
+        function () {
+          if (transitioning) {
+            return;
+          }
+
+          clearBurst();
+
+          input.value = '';
+          feedback.textContent = '';
+
+          input.removeAttribute('aria-invalid');
+          input.classList.remove('shake');
+
+          document.getElementById('hint').hidden = true;
+
+          document.getElementById('hint-button').setAttribute(
+            'aria-expanded',
+            'false'
+          );
+
+          showPanel('welcome');
+        }
+      );
+
+      motionButton.addEventListener('click', function () {
+        userPaused = !userPaused;
+        syncMotion();
+      });
+
+      document.addEventListener(
+        'visibilitychange',
+        function () {
+          document.body.classList.toggle(
+            'page-hidden',
+            document.hidden
+          );
+
+          syncMotion();
+        }
+      );
+
+      if (reducedMotion.addEventListener) {
+        reducedMotion.addEventListener(
+          'change',
+          syncMotion
+        );
+      } else if (reducedMotion.addListener) {
+        reducedMotion.addListener(syncMotion);
       }
 
-      showPanel('success');
+      // Совместимость SVG-символов со старыми Android WebView.
+      var symbols = document.querySelectorAll('use[href]');
 
-      for (let i = 0; i < 16; i++) {
-        setTimeout(createHeart, i * 100);
+      for (var s = 0; s < symbols.length; s++) {
+        symbols[s].setAttributeNS(
+          'http://www.w3.org/1999/xlink',
+          'xlink:href',
+          symbols[s].getAttribute('href')
+        );
       }
-    });
 
-    document.getElementById('restart').addEventListener('click', () => {
-      input.value = '';
-      feedback.textContent = '';
-      input.removeAttribute('aria-invalid');
-
-      document.getElementById('hint').hidden = true;
-      document.getElementById('hint-button').setAttribute('aria-expanded', 'false');
-
-      showPanel('welcome');
-      document.getElementById('start').focus({ preventScroll: true });
-    });
-
-    setInterval(createHeart, 2400);
+      syncMotion();
+    }());
   </script>
 </body>
 </html>
