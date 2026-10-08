@@ -3,16 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f5b2ca">
+  <meta name="theme-color" content="#2a0a20">
   <meta name="robots" content="noindex,nofollow">
   <title>Для Алины · Наша маленькая история</title>
   <style>
     :root {
-      color-scheme: light;
-      --ink: #300b20;
-      --muted: #40142c;
+      --leopard-photo: url("leopard-background.jpg");
+      color-scheme: dark;
+      --ink: #fff2f8;
+      --muted: #f6d0e2;
       --pink: #dc397b;
-      --deep: #641336;
+      --deep: #ffc2df;
       --paper: #fff8fa;
       --line: #f0cad9;
     }
@@ -352,75 +353,151 @@
       *, *::before, *::after { animation: none !important; transition: none !important; }
       .floating-heart, .burst-heart { display: none; }
     }
+
+    /* Оформление из твоих исходников. Картинки находятся внутри файла. */
+    html, body { background: #210817; }
+    ::selection { color: #fff; background: #b52671; }
+    .leopard-world {
+      opacity: 1;
+      background-image: var(--leopard-photo);
+      background-position: center center;
+      background-size: cover;
+    }
+    .backdrop::after {
+      background: linear-gradient(145deg, #1b06179e, #240b21bf 55%, #10050bba);
+    }
+    .brand { color: #ffe4f0; text-shadow: 0 2px 8px #180312; }
+    .brand svg { width: 25px; height: 25px; }
+    .chapter {
+      color: #ffe5f1;
+      background: #361127df;
+      border-color: #ed8abc80;
+      box-shadow: 0 4px 12px #0a030c22;
+    }
+    .card {
+      background: #38102b;
+      border-color: #f296c28c;
+      box-shadow: 0 28px 75px #09030b80, 0 0 45px #cc287822, inset 0 0 0 6px #ff8dc010;
+    }
+    .card::before { border-color: #ffb4d73d; z-index: 1; }
+    .card-pattern {
+      opacity: 1;
+      background-image: var(--leopard-photo);
+      background-size: cover;
+      background-position: center top;
+    }
+    .card-pattern::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #21071933 0%, #21071955 20%, #210719bf 40%, #210719df 59%, #210719e8 100%);
+    }
+    .card .edition { color: #ffdeed; text-shadow: 0 1px 5px #180510; }
+    .card .motion-toggle {
+      color: #ffe5f2;
+      background: #341024ba;
+      border-color: #f59ac24d;
+    }
+    .card .motion-toggle[aria-pressed="false"] { color: #e5b1cb; background: #260a1fd9; }
+    .card .hero-glow {
+      width: 260px;
+      height: 190px;
+      margin-left: -130px;
+      background: radial-gradient(ellipse, #ee4c9b35, #45123400 70%);
+    }
+    .card .hero-orbit { border-color: #ffc6e35c; }
+    .card .heart-main > svg {
+      filter: drop-shadow(0 10px 13px #080109a6) drop-shadow(0 0 2px #ffd3e8cc);
+    }
+    .card .heart-side > svg, .card .heart-outline > svg {
+      filter: drop-shadow(0 7px 8px #08010999);
+    }
+    .card .heart-main { width: 186px; height: 180px; margin-left: -93px; top: -3px; }
+    .card .heart-side { width: 88px; height: 88px; }
+    .card .heart-outline { width: 66px; height: 66px; }
+    .card .sparkle, .card .mini-spark { color: #ffd1e8; }
+    .card .dedication {
+      color: #ffe7f2;
+      background: #611f46ed;
+      border-color: #f398c29c;
+      box-shadow: 0 4px 16px #1603112e;
+    }
+    .card h1, .card h2 {
+      color: #fff4fa;
+      text-shadow: 0 2px 9px #12030dcc;
+    }
+    .card h1 em, .card h2 em { color: #ffb3d9; }
+    .card p { color: #ffe1ef; text-shadow: 0 1px 5px #170410; }
+    .card .eyebrow { color: #ffbddc; }
+    .card .primary {
+      color: #fff7fc;
+      background: linear-gradient(115deg, #e44196, #cf247f 54%, #a91d65);
+      border-color: #ffb4de80;
+      box-shadow: 0 9px 24px #11050eb0, inset 0 1px 0 #ffc3e577;
+    }
+    .card .primary::before { background: linear-gradient(100deg, transparent, #ffffff38, transparent); }
+    .card .primary > svg { width: 21px; height: 21px; }
+    .card .footnote { color: #f5c9df; text-shadow: 0 1px 5px #170410; }
+    .card .seal::before { background: #3a0e2bba; border-color: #ee8aba88; }
+    .card .seal::after { border-color: #e997bf77; }
+    .card label { color: #ffe4f1; }
+    .card input {
+      color: #fff0f8;
+      caret-color: #ffadd6;
+      background: #2c0b21ed;
+      border-color: #db76a8;
+      box-shadow: inset 0 2px 6px #09010822;
+    }
+    .card input::placeholder { color: #dba5c1; }
+    .card input:focus { border-color: #ffb1d8; box-shadow: 0 0 0 4px #d941902e; }
+    .card input[aria-invalid="true"] { border-color: #ff9bbd; }
+    .card .message { color: #ffd0e1; text-shadow: 0 1px 5px #170410; }
+    .card .text-button { color: #ffcfE6; text-shadow: 0 1px 5px #170410; }
+    .card .hint { color: #ffe1ef; background: #461430e8; border-color: #d578a899; }
+    .card .code-ticket { background: #36102b; border-color: #e48cb785; }
+    .card .ticket-pattern {
+      opacity: .23;
+      background: var(--leopard-photo) center center / cover;
+    }
+    .card .code-ticket .eyebrow { color: #ffe2f0; text-shadow: 0 2px 5px #13030c; }
+    .card .digit {
+      color: #fff3fa;
+      background: linear-gradient(145deg, #973665, #5f1c44);
+      border-color: #f2a5ce9e;
+      box-shadow: 0 7px 14px #10030d55, inset 0 -3px 0 #42102e;
+    }
+    .card .progress i { background: #d484af55; }
+    .card .progress i.on { background: #ffa7d2; }
+    .card .progress-heart { width: 17px; height: 17px; }
+    footer { color: #ffe1ef; text-shadow: 0 2px 7px #14020e; }
+    button:focus-visible { outline-color: #ffc6e3; }
+    @media (hover: hover) {
+      .card .text-button:hover { color: #fff; }
+      .card .motion-toggle:hover { background: #6a1e49; }
+    }
+    @media (max-width: 400px) {
+      .brand svg { width: 21px; height: 21px; }
+      .card .heart-main { width: 176px; height: 171px; margin-left: -88px; }
+      .card .heart-side { width: 77px; height: 77px; }
+      .card .heart-outline { width: 59px; height: 59px; }
+    }
   </style>
 </head>
 <body>
-  <!-- Все рисунки встроены: шрифты, библиотеки и картинки из сети не нужны. -->
+  <!-- Положи рядом с этим HTML два файла: leopard-background.jpg и leopard-heart.png. -->
   <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
     <defs>
-      <linearGradient id="heart-pink" x1=".16" y1="0" x2=".85" y2="1" gradientUnits="objectBoundingBox">
-        <stop offset="0" stop-color="#ffb4d5"/><stop offset=".3" stop-color="#f36ba9"/><stop offset=".61" stop-color="#df347e"/><stop offset="1" stop-color="#a4114d"/>
-      </linearGradient>
-      <radialGradient id="heart-shine" cx=".27" cy=".23" r=".72">
-        <stop offset="0" stop-color="#fff4fa" stop-opacity=".86"/><stop offset=".38" stop-color="#ffc7e1" stop-opacity=".2"/><stop offset="1" stop-color="#ffadd1" stop-opacity="0"/>
-      </radialGradient>
-      <linearGradient id="heart-edge" x1="0" y1="0" x2="1" y2="1">
-        <stop stop-color="#ffc6df"/><stop offset="1" stop-color="#ae1b57"/>
-      </linearGradient>
-      <pattern id="leopard" width="205" height="196" patternUnits="userSpaceOnUse">
-        <rect width="205" height="196" fill="#efa6c0"/>
-        <g fill="#df6698">
-          <path d="M23 23C32 11 48 13 52 25S45 49 33 46 13 37 23 23Z"/>
-          <path d="M123 20C133 9 151 17 150 30S131 48 121 39 118 26 123 20Z"/>
-          <path d="M73 75C84 62 104 70 104 86S86 105 73 96 64 84 73 75Z"/>
-          <path d="M172 75C184 66 199 78 194 94S173 108 167 95 165 82 172 75Z"/>
-          <path d="M22 133C30 121 52 123 54 137S42 155 28 151 13 144 22 133Z"/>
-          <path d="M126 137C135 123 150 130 154 143S146 164 132 159 118 148 126 137Z"/>
-          <path d="M73 178C84 168 98 178 97 189S79 205 70 195 65 186 73 178Z"/>
-        </g>
-        <g fill="none" stroke="#552238" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M24 20C13 24 12 38 22 43M34 15C47 12 58 20 56 30M54 39C49 50 35 52 29 46"/>
-          <path d="M125 17C112 20 112 35 122 42M135 14C150 11 158 26 151 36M145 43L135 46"/>
-          <path d="M78 69C64 70 60 82 67 93M89 67C104 65 112 79 106 87M101 99C88 107 76 101 75 99"/>
-          <path d="M173 73C162 75 157 87 165 98M187 70C200 73 203 86 197 91M190 102C181 109 172 104 172 103"/>
-          <path d="M25 125C11 130 11 144 21 150M37 123C53 119 62 133 55 142M48 153C39 159 30 154 28 153"/>
-          <path d="M126 130C115 136 115 150 125 157M138 125C154 125 161 137 157 145M152 157C145 166 138 165 133 163"/>
-          <path d="M73 174C62 178 60 190 68 198M86 171C102 173 106 185 99 194M92 200L84 202"/>
-        </g>
-        <g fill="#682b43">
-          <path d="M78 22q10-7 12 1t-9 7Z"/><path d="M8 81q8-7 11 0t-9 8Z"/>
-          <path d="M141 82q8-5 9 3t-8 6Z"/><path d="M83 134q9-9 13-1t-7 9Z"/>
-          <path d="M181 149q8-6 9 2t-9 6Z"/><path d="M31 179q9-4 10 4t-11 3Z"/>
-          <path d="M180 22q8-6 10 1t-8 7Z"/><path d="M116 109q7-5 8 1t-7 5Z"/>
-        </g>
-      </pattern>
-      <pattern id="leopard-small" width="57.4" height="54.88" patternUnits="userSpaceOnUse">
-        <rect width="57.4" height="54.88" fill="#ffbad5"/>
-        <g transform="scale(.28)"><rect width="205" height="196" fill="url(#leopard)"/></g>
-      </pattern>
-      <symbol id="heart-shape" viewBox="0 0 100 100">
-        <path d="M50 90C42 84 5 60 5 33 5 9 34 1 50 24 66 1 95 9 95 33 95 60 58 84 50 90Z"/>
-      </symbol>
-      <symbol id="heart-jewel" viewBox="0 0 100 100">
-        <path d="M50 90C42 84 5 60 5 33 5 9 34 1 50 24 66 1 95 9 95 33 95 60 58 84 50 90Z" fill="url(#heart-pink)" stroke="url(#heart-edge)" stroke-width=".8"/>
-        <path d="M50 90C42 84 5 60 5 33 5 9 34 1 50 24 66 1 95 9 95 33 95 60 58 84 50 90Z" fill="url(#heart-shine)"/>
-        <path d="M14 33C13 20 27 13 36 19" fill="none" stroke="#fff6fc" stroke-width="4.5" stroke-linecap="round" opacity=".75"/>
-        <path d="M65 19C74 13 85 21 86 29" fill="none" stroke="#ffd4e9" stroke-width="2.4" stroke-linecap="round" opacity=".52"/>
-        <path d="M85 47C79 61 65 73 53 81" fill="none" stroke="#8c0e42" stroke-width="2" stroke-linecap="round" opacity=".22"/>
-      </symbol>
-      <symbol id="heart-leopard" viewBox="0 0 100 100">
-        <path d="M50 90C42 84 5 60 5 33 5 9 34 1 50 24 66 1 95 9 95 33 95 60 58 84 50 90Z" fill="url(#leopard-small)" stroke="#ac3665" stroke-width="1.3"/>
-        <path d="M14 33C13 20 27 13 36 19" fill="none" stroke="#fff0f8" stroke-width="3.5" stroke-linecap="round" opacity=".75"/>
-      </symbol>
-      <symbol id="heart-outline" viewBox="0 0 100 100">
-        <path d="M50 90C42 84 5 60 5 33 5 9 34 1 50 24 66 1 95 9 95 33 95 60 58 84 50 90Z" fill="#fff3f780" stroke="#d64c89" stroke-width="3"/>
-      </symbol>
+      <image id="heart-photo-source" x="0" y="0" width="6080" height="4160" href="leopard-heart.png"/>
+      <symbol id="heart-shape" viewBox="1457 707 3170 2842"><use href="#heart-photo-source"/></symbol>
+      <symbol id="heart-jewel" viewBox="1457 707 3170 2842"><use href="#heart-photo-source"/></symbol>
+      <symbol id="heart-leopard" viewBox="1457 707 3170 2842"><use href="#heart-photo-source"/></symbol>
+      <symbol id="heart-outline" viewBox="1457 707 3170 2842"><use href="#heart-photo-source"/></symbol>
       <symbol id="sparkle" viewBox="0 0 24 24"><path d="M12 1C13.8 8.9 15.1 10.2 23 12 15.1 13.8 13.8 15.1 12 23 10.2 15.1 8.9 13.8 1 12 8.9 10.2 10.2 8.9 12 1Z" fill="currentColor"/></symbol>
     </defs>
   </svg>
 
   <div class="backdrop" aria-hidden="true">
-    <svg class="leopard-world" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="url(#leopard)"/></svg>
+    <div class="leopard-world"></div>
   </div>
   <div class="ambient" id="ambient" aria-hidden="true"></div>
   <div class="celebration" id="celebration" aria-hidden="true"></div>
@@ -432,10 +509,7 @@
     </header>
 
     <main class="card" id="card">
-      <svg class="card-pattern" aria-hidden="true" focusable="false">
-        <rect width="100%" height="100%" fill="url(#leopard)"/>
-      </svg>
-      <svg class="card-ribbon" aria-hidden="true"><rect width="100%" height="100%" fill="url(#leopard-small)"/></svg>
+      <div class="card-pattern" aria-hidden="true"></div>
       <div class="card-toolbar">
         <span class="edition">Одно особенное воспоминание</span>
         <button class="motion-toggle" id="motion-toggle" type="button" aria-label="Выключить анимацию" aria-pressed="true" title="Выключить анимацию">
@@ -453,8 +527,8 @@
           <svg class="sparkle s2" viewBox="0 0 24 24"><use href="#sparkle"/></svg>
           <svg class="sparkle s3" viewBox="0 0 24 24"><use href="#sparkle"/></svg>
           <svg class="bridge" viewBox="0 0 280 62" fill="none">
-            <ellipse cx="140" cy="12" rx="45" ry="4" fill="#b5487320"/>
-            <g stroke="#cc789a" stroke-linecap="round" stroke-width="1.25" opacity=".75">
+            <ellipse cx="140" cy="12" rx="45" ry="4" fill="#19071466"/>
+            <g stroke="#f2bad4" stroke-linecap="round" stroke-width="1.25" opacity=".75">
               <path d="M27 36H253M46 36V26Q140-17 234 26V36M53 36V30Q140-9 227 30V36"/>
               <path d="M72 21v15m23-22v22m22-28v28m23-30v30m23-28v28m22-22v22m23-15v15"/>
               <path class="water" d="M48 47q18-5 36 0t36 0t36 0t36 0t36 0M84 57q14-4 28 0t28 0t28 0t28 0"/>
@@ -495,7 +569,7 @@
         <h2 id="success-title" tabindex="-1">Именно там.<br><em>И именно с тобой.</em></h2>
         <p>То место теперь для меня особенное.<br>А у тебя появился ключ к следующему сюрпризу.</p>
         <div class="code-ticket">
-          <svg class="ticket-pattern" aria-hidden="true"><rect width="100%" height="100%" fill="url(#leopard-small)"/></svg>
+          <div class="ticket-pattern" aria-hidden="true"></div>
           <div class="eyebrow">Код первой коробочки</div>
           <div class="code" id="code" role="group" aria-label="Код замка"></div>
         </div>
@@ -733,7 +807,7 @@
       else if (reducedMotion.addListener) { reducedMotion.addListener(syncMotion); }
 
       // xlink:href поддерживает SVG-символы и в старых Android WebView.
-      var symbols = document.querySelectorAll('use[href]');
+      var symbols = document.querySelectorAll('use[href], image[href]');
       for (var s = 0; s < symbols.length; s++) {
         symbols[s].setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', symbols[s].getAttribute('href'));
       }
