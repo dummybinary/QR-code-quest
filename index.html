@@ -9,10 +9,10 @@
   <style>
     :root {
       color-scheme: light;
-      --ink: #52243a;
-      --muted: #895369;
+      --ink: #300b20;
+      --muted: #40142c;
       --pink: #dc397b;
-      --deep: #b51e5b;
+      --deep: #641336;
       --paper: #fff8fa;
       --line: #f0cad9;
     }
@@ -94,11 +94,11 @@
       position: relative;
       overflow: hidden;
       padding: 23px 36px 21px;
-      border: 1px solid #fff;
+      border: 1px solid #f8c0d7;
       border-radius: 32px;
       text-align: center;
-      background: linear-gradient(145deg, #fffafc 0%, #fff5f9 70%, #ffeaf3 100%);
-      box-shadow: 0 28px 75px #68253f26, 0 5px 15px #9b366119, inset 0 0 0 6px #ffffff60;
+      background: #f5b2ca;
+      box-shadow: 0 28px 75px #68253f26, 0 5px 15px #9b366119, inset 0 0 0 6px #ffcae044;
     }
     .card::before {
       content: "";
@@ -109,6 +109,34 @@
       pointer-events: none;
       z-index: 0;
     }
+    .card-pattern {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: .36;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .card .edition, .card .footnote, .card label,
+    .card .text-button, .card .message { color: #40142c; }
+    .card h1, .card h2, .card p {
+      text-shadow: 0 1px 0 #ffcfe344;
+    }
+    .card h1 em, .card h2 em { color: #74163e; }
+    .card .dedication { background: #f8bfd6; border-color: #d98cad; }
+    .card input { background: #ffd5e5; border-color: #b96d92; }
+    .card input::placeholder { color: #74405a; }
+    .card input:focus { border-color: #8c2755; box-shadow: 0 0 0 4px #f79fc644; }
+    .card .hint { background: #f8bfd6; border-color: #b86a90; }
+    .card .code-ticket { background: #ef9bbe; border-color: #bc6a90; }
+    .card .digit { background: linear-gradient(145deg, #ffd2e5, #f1a2c3); color: #50112f; border-color: #fbc9df; }
+    .card .seal::before { background: #f6b1ce; border-color: #d589ad; }
+    .card .seal::after { border-color: #bf7197; }
+    .card .hero-orbit { border-color: #aa507755; }
+    .card .progress i { background: #bc719344; }
+    .card .progress i.on { background: #8d2758; }
+    .card .progress-heart { color: #801d4b; }
     .card-ribbon { position: absolute; top: 0; left: 0; width: 100%; height: 7px; opacity: .85; }
     .card-toolbar { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; min-height: 38px; }
     .edition { color: var(--muted); font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
@@ -404,6 +432,9 @@
     </header>
 
     <main class="card" id="card">
+      <svg class="card-pattern" aria-hidden="true" focusable="false">
+        <rect width="100%" height="100%" fill="url(#leopard)"/>
+      </svg>
       <svg class="card-ribbon" aria-hidden="true"><rect width="100%" height="100%" fill="url(#leopard-small)"/></svg>
       <div class="card-toolbar">
         <span class="edition">Одно особенное воспоминание</span>
