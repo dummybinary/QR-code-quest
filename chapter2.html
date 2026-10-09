@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2a0a20">
+<meta name="robots" content="noindex,nofollow">
+<title>Для Алиночки · Глава 02 · Увидеть невидимое</title>
+<style>
+    :root {
+      --leopard-photo: url("leopard-background.jpg");
+      color-scheme: dark;
+      --ink: #fff2f8;
+      --muted: #f6d0e2;
+      --pink: #dc397b;
+      --deep: #ffc2df;
+      --paper: #fff8fa;
+      --line: #f0cad9;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { min-width: 280px; background: #f5b2ca; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100svh;
+      padding: 28px 18px 24px;
+      padding-top: max(28px, env(safe-area-inset-top));
+      padding-bottom: max(24px, env(safe-area-inset-bottom));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      color: var(--ink);
+      background: #f5b2ca;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button, input { font: inherit; }
+    button { touch-action: manipulation; }
+    button, a, input { -webkit-tap-highlight-color: transparent; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible {
+      outline: 3px solid #9b2054;
+      outline-offset: 4px;
+    }
+    ::selection { color: #59112e; background: #ffc7dc; }
+    .svg-library { position: absolute; width: 0; height: 0; overflow: hidden; }
+    .backdrop, .leopard-world, .ambient, .celebration {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .backdrop { z-index: 0; overflow: hidden; }
+    .leopard-world { opacity: .53; }
+    .backdrop::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 42%, #ffe7f0d9 0%, #ffc6dc66 47%, #ed85b11a 80%);
+    }
+    .ambient { z-index: 3; overflow: hidden; }
+    .celebration { z-index: 6; overflow: hidden; }
+    .frame { position: relative; z-index: 2; width: 100%; max-width: 510px; }
+    .masthead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 6px 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .brand svg { width: 22px; height: 22px; flex: none; fill: var(--deep); }
+    .chapter {
+      padding: 8px 12px;
+      border: 1px solid #fff3f8;
+      border-radius: 30px;
+      background: #fff2f7e8;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .11em;
+      white-space: nowrap;
+    }
+    .card {
+      position: relative;
+      overflow: hidden;
+      padding: 23px 36px 21px;
+      border: 1px solid #f8c0d7;
+      border-radius: 32px;
+      text-align: center;
+      background: #f5b2ca;
+      box-shadow: 0 28px 75px #68253f26, 0 5px 15px #9b366119, inset 0 0 0 6px #ffcae044;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border: 1px solid #f1cfdd;
+      border-radius: 24px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .card-pattern {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: .36;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .card .edition, .card .footnote, .card label,
+    .card .text-button, .card .message { color: #40142c; }
+    .card h1, .card h2, .card p {
+      text-shadow: 0 1px 0 #ffcfe344;
+    }
+    .card h1 em, .card h2 em { color: #74163e; }
+    .card .dedication { background: #f8bfd6; border-color: #d98cad; }
+    .card input { background: #ffd5e5; border-color: #b96d92; }
+    .card input::placeholder { color: #74405a; }
+    .card input:focus { border-color: #8c2755; box-shadow: 0 0 0 4px #f79fc644; }
+    .card .hint { background: #f8bfd6; border-color: #b86a90; }
+    .card .code-ticket { background: #ef9bbe; border-color: #bc6a90; }
+    .card .digit { background: linear-gradient(145deg, #ffd2e5, #f1a2c3); color: #50112f; border-color: #fbc9df; }
+    .card .seal::before { background: #f6b1ce; border-color: #d589ad; }
+    .card .seal::after { border-color: #bf7197; }
+    .card .hero-orbit { border-color: #aa507755; }
+    .card .progress i { background: #bc719344; }
+    .card .progress i.on { background: #8d2758; }
+    .card .progress-heart { color: #801d4b; }
+    .card-ribbon { position: absolute; top: 0; left: 0; width: 100%; height: 7px; opacity: .85; }
+    .card-toolbar { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; min-height: 38px; }
+    .edition { color: var(--muted); font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
+    .motion-toggle {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      margin-right: -7px;
+      padding: 0;
+      border: 1px solid transparent;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--deep);
+      transition: background .2s;
+    }
+    .motion-toggle svg { width: 19px; height: 19px; }
+    .motion-toggle[aria-pressed="false"] { color: #895369; background: #f8e6ed; }
+    .panel { position: relative; z-index: 1; animation: panel-in .65s cubic-bezier(.2,.7,.25,1) both; }
+    .panel.leaving { animation: panel-out .19s ease both; pointer-events: none; }
+    .hero { position: relative; height: 198px; margin: -6px -12px 6px; pointer-events: none; }
+    .hero-glow {
+      position: absolute;
+      left: 50%; top: 13px;
+      width: 228px; height: 170px;
+      margin-left: -114px;
+      background: radial-gradient(ellipse, #ffc3db99, #ffeaf200 70%);
+    }
+    .hero-orbit {
+      position: absolute;
+      left: 50%; top: 24px;
+      width: 248px; height: 125px;
+      margin-left: -124px;
+      border: 1px solid #e8a4b966;
+      border-radius: 50%;
+      transform: rotate(-18deg);
+    }
+    .heart-main { position: absolute; width: 174px; height: 174px; left: 50%; top: 1px; margin-left: -87px; animation: main-float 4.8s ease-in-out infinite; }
+    .heart-main > svg { width: 100%; height: 100%; transform: rotate(-8deg); }
+    .heart-side { position: absolute; width: 82px; height: 82px; top: 72px; left: calc(50% - 139px); animation: side-float 5.5s ease-in-out infinite; }
+    .heart-side > svg { width: 100%; height: 100%; transform: rotate(-23deg); }
+    .heart-outline { position: absolute; top: 46px; left: calc(50% + 72px); width: 59px; height: 59px; animation: side-float 4.5s ease-in-out -1.8s infinite; }
+    .heart-outline > svg { width: 100%; height: 100%; transform: rotate(19deg); }
+    .bridge { position: absolute; width: 252px; height: 53px; left: 50%; bottom: 0; margin-left: -126px; }
+    .water { animation: water 5s ease-in-out infinite; }
+    .sparkle { position: absolute; width: 20px; height: 20px; color: #c22b64; animation: twinkle 3s ease-in-out infinite; }
+    .sparkle.s1 { top: 29px; left: calc(50% - 108px); width: 15px; height: 15px; }
+    .sparkle.s2 { top: 121px; left: calc(50% + 103px); animation-delay: -1.4s; }
+    .sparkle.s3 { top: 6px; left: calc(50% + 73px); width: 9px; height: 9px; animation-delay: -.8s; }
+    .eyebrow {
+      margin: 5px auto 17px;
+      color: var(--deep);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+    .dedication { display: inline-flex; align-items: center; gap: 9px; padding: 8px 15px; border: 1px solid #f1cede; border-radius: 30px; background: #ffedf4; }
+    .dedication svg { width: 10px; height: 10px; }
+    h1, h2 {
+      margin: 0 0 19px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 39px;
+      font-size: clamp(31px, 8.3vw, 39px);
+      font-weight: 400;
+      line-height: 1.13;
+      letter-spacing: -.045em;
+    }
+    h1 em, h2 em { color: #c12865; font-weight: 400; }
+    h1 em { display: block; margin-top: 2px; }
+    h1:focus, h2:focus { outline: none; }
+    p { max-width: 350px; margin: 0 auto 23px; color: var(--muted); font-size: 13px; line-height: 1.8; }
+    .primary {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      overflow: hidden;
+      width: 100%;
+      min-height: 57px;
+      padding: 17px 16px;
+      border: 1px solid #ffffff45;
+      border-radius: 17px;
+      background: linear-gradient(115deg, #df4081 0%, #d02d71 52%, #b92362 100%);
+      box-shadow: 0 9px 22px #cf377a33, inset 0 1px 0 #ffb3d366;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .015em;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .primary::before {
+      content: "";
+      position: absolute;
+      top: 0; bottom: 0; left: -65%;
+      width: 44%;
+      background: linear-gradient(100deg, transparent, #ffffff2e, transparent);
+      transform: skewX(-20deg);
+      animation: button-glint 7s ease-in-out 1.8s infinite;
+    }
+    .primary svg { flex: none; width: 17px; height: 17px; }
+    .arrow { font-size: 21px; font-weight: 400; line-height: 16px; margin-left: auto; }
+    .primary .button-label { margin: 0 auto; }
+    .primary:active { transform: scale(.975); box-shadow: 0 4px 12px #cf377a30; }
+    @media (hover: hover) {
+      .primary:hover { transform: translateY(-2px); box-shadow: 0 13px 26px #cf377a44; }
+      .text-button:hover { color: #aa154d; }
+      .motion-toggle:hover { background: #fbe5ee; }
+    }
+    .footnote { margin-top: 17px; color: #8c566a; font-size: 10px; line-height: 1.6; letter-spacing: .03em; }
+    .progress { position: relative; display: flex; align-items: center; justify-content: center; gap: 8px; margin: 23px 0 0; height: 16px; }
+    .progress i { display: block; width: 20px; height: 4px; border-radius: 6px; background: #edd1dc; transition: width .4s, background .4s; }
+    .progress i.on { background: #d3437d; }
+    .progress i.current { width: 34px; }
+    .progress .progress-heart { width: 12px; height: 12px; color: #c32c66; margin-left: 3px; }
+    .seal { position: relative; display: grid; place-items: center; width: 128px; height: 124px; margin: 6px auto 12px; }
+    .seal::before { content: ""; position: absolute; inset: 11px; border-radius: 50%; background: #fce2ed; border: 1px solid #f5bfd4; }
+    .seal::after { content: ""; position: absolute; inset: 1px; border-radius: 50%; border: 1px dashed #e7abc2; transform: rotate(-15deg); }
+    .seal > svg { position: relative; z-index: 1; width: 100px; height: 100px; animation: gentle-beat 3.2s ease-in-out infinite; }
+    .seal .mini-spark { position: absolute; top: 8px; right: -2px; width: 24px; height: 24px; color: #be2461; animation: twinkle 3s ease-in-out infinite; }
+    #question h2, #success h2 { margin-bottom: 17px; }
+    #question p { margin-bottom: 21px; }
+    form { margin-top: 25px; }
+    label { display: block; margin: 0 0 9px 3px; color: var(--ink); text-align: left; font-size: 12px; font-weight: 600; }
+    .input-wrap { position: relative; }
+    .input-wrap > svg { position: absolute; top: 19px; right: 17px; width: 19px; height: 19px; color: #c16b90; pointer-events: none; }
+    input {
+      display: block;
+      width: 100%;
+      min-height: 58px;
+      padding: 17px 47px 17px 17px;
+      border: 1px solid #e3b5c8;
+      border-radius: 15px;
+      background: #fffdfd;
+      box-shadow: inset 0 2px 4px #68213d04;
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.4;
+      transition: border-color .2s, box-shadow .2s;
+      -webkit-appearance: none;
+      appearance: none;
+      scroll-margin: 20px;
+    }
+    input::placeholder { color: #a27185; opacity: 1; }
+    input:focus { border-color: #d43c7e; box-shadow: 0 0 0 4px #f9deea; outline: none; }
+    input[aria-invalid="true"] { border-color: #b11c50; }
+    .message { min-height: 43px; margin: 8px 2px 10px; color: #a02b55; text-align: left; font-size: 12px; line-height: 1.6; }
+    .text-button { min-height: 44px; padding: 13px 9px; border: 0; border-radius: 8px; background: transparent; color: #884461; font-size: 12px; line-height: 1.5; text-decoration: underline; text-underline-offset: 4px; }
+    #hint-button { margin-top: 9px; }
+    .hint { padding: 13px 16px; border: 1px dashed #e5b1c6; border-radius: 13px; background: #fff0f6; font-size: 12px; animation: panel-in .35s ease both; }
+    #question .hint { margin: 5px auto 0; }
+    .code-ticket { position: relative; margin: 24px 0; padding: 22px 10px 23px; border: 1px solid #edb9cf; border-radius: 21px; background: #ffe8f1; overflow: hidden; }
+    .ticket-pattern { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .08; pointer-events: none; }
+    .code-ticket .eyebrow { position: relative; margin: 0 0 17px; font-size: 9px; letter-spacing: .16em; }
+    .code { position: relative; display: flex; justify-content: center; gap: 11px; }
+    .digit { display: grid; place-items: center; width: 69px; height: 84px; border: 1px solid #fff; border-radius: 14px; color: #a42158; background: linear-gradient(145deg, #fff, #fff1f6); box-shadow: 0 7px 14px #9a31571a, inset 0 -3px 0 #f5d4e1; font: 44px/1 Georgia, serif; animation: digit-in .7s cubic-bezier(.2,.7,.2,1.15) both; }
+    .digit:nth-child(2) { animation-delay: .13s; }
+    .digit:nth-child(3) { animation-delay: .26s; }
+    .success-note { margin-bottom: 10px; }
+    #restart { margin-top: 1px; }
+    footer { margin: 19px auto 0; padding: 0 14px; color: #793d58; text-align: center; font: italic 12px/1.7 Georgia, "Times New Roman", serif; }
+    .floating-heart { position: absolute; bottom: -110px; left: var(--left); width: var(--size); height: var(--size); opacity: 0; filter: drop-shadow(0 4px 8px #09010966); animation: float-up var(--duration) linear both; }
+    .floating-heart svg { width: 100%; height: 100%; transform: rotate(var(--tilt)); }
+    .burst-heart { position: absolute; top: 42%; left: 50%; width: var(--size); height: var(--size); opacity: 0; animation: heart-burst var(--duration) cubic-bezier(.12,.55,.45,1) both; }
+    .burst-heart svg { width: 100%; height: 100%; }
+    .shake { animation: shake .32s ease; }
+    .motion-paused *, .motion-paused *::before, .motion-paused *::after { animation: none !important; transition: none !important; }
+    .motion-paused .floating-heart, .motion-paused .burst-heart { display: none; }
+    .page-hidden *, .page-hidden *::before, .page-hidden *::after { animation-play-state: paused !important; }
+    @keyframes panel-in { from { opacity: 0; transform: translateY(14px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes panel-out { to { opacity: 0; transform: translateY(-9px) scale(.985); } }
+    @keyframes main-float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-9px) rotate(4deg); } }
+    @keyframes side-float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-7px) rotate(-6deg); } }
+    @keyframes gentle-beat { 0%, 40%, 70%, 100% { transform: scale(1) rotate(-7deg); } 52% { transform: scale(1.07) rotate(-4deg); } 61% { transform: scale(1.02) rotate(-6deg); } }
+    @keyframes twinkle { 0%, 100% { opacity: .45; transform: scale(.8) rotate(0); } 50% { opacity: 1; transform: scale(1.15) rotate(12deg); } }
+    @keyframes water { 50% { transform: translateX(5px); opacity: .55; } }
+    @keyframes button-glint { 0%, 72% { left: -65%; } 91%, 100% { left: 140%; } }
+    @keyframes float-up { 8% { opacity: .55; } 76% { opacity: .4; } 100% { opacity: 0; transform: translate3d(var(--drift), calc(-100vh - 180px), 0) rotate(30deg); } }
+    @keyframes heart-burst { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.2); } 12% { opacity: 1; } 75% { opacity: .9; } 100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) rotate(var(--spin)) scale(.65); } }
+    @keyframes digit-in { from { opacity: 0; transform: translateY(18px) scale(.8) rotate(-5deg); } to { opacity: 1; transform: none; } }
+    @keyframes shake { 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
+    @media (max-width: 400px) {
+      body { padding-left: 13px; padding-right: 13px; padding-top: 18px; padding-bottom: 19px; }
+      .masthead { margin: 0 4px 13px; gap: 7px; }
+      .brand { font-size: 8px; letter-spacing: .12em; gap: 6px; }
+      .brand svg { width: 18px; height: 18px; }
+      .chapter { font-size: 9px; padding: 7px 10px; }
+      .card { padding: 17px 23px 19px; border-radius: 28px; }
+      .card::before { inset: 7px; border-radius: 21px; }
+      .hero { height: 184px; margin-top: -7px; }
+      .heart-main { width: 163px; height: 163px; margin-left: -81.5px; }
+      .heart-side { width: 73px; height: 73px; left: calc(50% - 125px); }
+      .heart-outline { width: 53px; height: 53px; left: calc(50% + 67px); }
+      .hero-orbit { width: 228px; margin-left: -114px; }
+      .edition { font-size: 8px; }
+      p { font-size: 12px; }
+      .footnote { font-size: 9px; }
+      .seal { width: 116px; height: 112px; margin-top: 0; }
+      .seal > svg { width: 91px; height: 91px; }
+      footer { margin-top: 15px; font-size: 11px; }
+    }
+    @media (max-width: 330px) {
+      .card { padding-left: 20px; padding-right: 20px; }
+      h1, h2 { font-size: 28px; }
+      .brand { letter-spacing: .02em; }
+      .primary { font-size: 12px; gap: 7px; }
+      .digit { width: 61px; height: 76px; }
+      .code { gap: 8px; }
+      .eyebrow { font-size: 9px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .floating-heart, .burst-heart { display: none; }
+    }
+
+    /* Оформление из твоих исходников. Картинки находятся внутри файла. */
+    html, body { background: #210817; }
+    ::selection { color: #fff; background: #b52671; }
+    .leopard-world {
+      opacity: 1;
+      background-image: var(--leopard-photo);
+      background-position: center center;
+      background-size: cover;
+    }
+    .backdrop::after {
+      background: linear-gradient(145deg, #1b06179e, #240b21bf 55%, #10050bba);
+    }
+    .brand { color: #ffe4f0; text-shadow: 0 2px 8px #180312; }
+    .brand svg { width: 25px; height: 25px; }
+    .chapter {
+      color: #ffe5f1;
+      background: #361127df;
+      border-color: #ed8abc80;
+      box-shadow: 0 4px 12px #0a030c22;
+    }
+    .card {
+      background: #38102b;
+      border-color: #f296c28c;
+      box-shadow: 0 28px 75px #09030b80, 0 0 45px #cc287822, inset 0 0 0 6px #ff8dc010;
+    }
+    .card::before { border-color: #ffb4d73d; z-index: 1; }
+    .card-pattern {
+      opacity: 1;
+      background-image: var(--leopard-photo);
+      background-size: cover;
+      background-position: center top;
+    }
+    .card-pattern::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #21071933 0%, #21071955 20%, #210719bf 40%, #210719df 59%, #210719e8 100%);
+    }
+    .card .edition { color: #ffdeed; text-shadow: 0 1px 5px #180510; }
+    .card .motion-toggle {
+      color: #ffe5f2;
+      background: #341024ba;
+      border-color: #f59ac24d;
+    }
+    .card .motion-toggle[aria-pressed="false"] { color: #e5b1cb; background: #260a1fd9; }
+    .card .hero-glow {
+      width: 260px;
+      height: 190px;
+      margin-left: -130px;
+      background: radial-gradient(ellipse, #ee4c9b35, #45123400 70%);
+    }
+    .card .hero-orbit { border-color: #ffc6e35c; }
+    .card .heart-main > svg {
+      filter: drop-shadow(0 10px 13px #080109a6) drop-shadow(0 0 2px #ffd3e8cc);
+    }
+    .card .heart-side > svg, .card .heart-outline > svg {
+      filter: drop-shadow(0 7px 8px #08010999);
+    }
+    .card .heart-main { width: 186px; height: 180px; margin-left: -93px; top: -3px; }
+    .card .heart-side { width: 88px; height: 88px; }
+    .card .heart-outline { width: 66px; height: 66px; }
+    .card .sparkle, .card .mini-spark { color: #ffd1e8; }
+    .card .dedication {
+      color: #ffe7f2;
+      background: #611f46ed;
+      border-color: #f398c29c;
+      box-shadow: 0 4px 16px #1603112e;
+    }
+    .card h1, .card h2 {
+      color: #fff4fa;
+      text-shadow: 0 2px 9px #12030dcc;
+    }
+    .card h1 em, .card h2 em { color: #ffb3d9; }
+    .card p { color: #ffe1ef; text-shadow: 0 1px 5px #170410; }
+    .card .eyebrow { color: #ffbddc; }
+    .card .primary {
+      color: #fff7fc;
+      background: linear-gradient(115deg, #e44196, #cf247f 54%, #a91d65);
+      border-color: #ffb4de80;
+      box-shadow: 0 9px 24px #11050eb0, inset 0 1px 0 #ffc3e577;
+    }
+    .card .primary::before { background: linear-gradient(100deg, transparent, #ffffff38, transparent); }
+    .card .primary > svg { width: 21px; height: 21px; }
+    .card .footnote { color: #f5c9df; text-shadow: 0 1px 5px #170410; }
+    .card .seal::before { background: #3a0e2bba; border-color: #ee8aba88; }
+    .card .seal::after { border-color: #e997bf77; }
+    .card label { color: #ffe4f1; }
+    .card input {
+      color: #fff0f8;
+      caret-color: #ffadd6;
+      background: #2c0b21ed;
+      border-color: #db76a8;
+      box-shadow: inset 0 2px 6px #09010822;
+    }
+    .card input::placeholder { color: #dba5c1; }
+    .card input:focus { border-color: #ffb1d8; box-shadow: 0 0 0 4px #d941902e; }
+    .card input[aria-invalid="true"] { border-color: #ff9bbd; }
+    .card .message { color: #ffd0e1; text-shadow: 0 1px 5px #170410; }
+    .card .text-button { color: #ffcfE6; text-shadow: 0 1px 5px #170410; }
+    .card .hint { color: #ffe1ef; background: #461430e8; border-color: #d578a899; }
+    .card .code-ticket { background: #36102b; border-color: #e48cb785; }
+    .card .ticket-pattern {
+      opacity: .23;
+      background: var(--leopard-photo) center center / cover;
+    }
+    .card .code-ticket .eyebrow { color: #ffe2f0; text-shadow: 0 2px 5px #13030c; }
+    .card .digit {
+      color: #fff3fa;
+      background: linear-gradient(145deg, #973665, #5f1c44);
+      border-color: #f2a5ce9e;
+      box-shadow: 0 7px 14px #10030d55, inset 0 -3px 0 #42102e;
+    }
+    .card .progress i { background: #d484af55; }
+    .card .progress i.on { background: #ffa7d2; }
+    .card .progress-heart { width: 17px; height: 17px; }
+    footer { color: #ffe1ef; text-shadow: 0 2px 7px #14020e; }
+    button:focus-visible { outline-color: #ffc6e3; }
+    @media (hover: hover) {
+      .card .text-button:hover { color: #fff; }
+      .card .motion-toggle:hover { background: #6a1e49; }
+    }
+    @media (max-width: 400px) {
+      .brand svg { width: 21px; height: 21px; }
+      .card .heart-main { width: 176px; height: 171px; margin-left: -88px; }
+      .card .heart-side { width: 77px; height: 77px; }
+      .card .heart-outline { width: 59px; height: 59px; }
+    }
+  
+    /* Глава 02: текст доступен сразу, даже без JavaScript. */
+    .masthead { flex-direction: column; gap: 10px; margin-bottom: 18px; }
+    .brand { font-size: 11px; letter-spacing: .15em; }
+    .chapter { font-size: 10px; letter-spacing: .07em; white-space: normal; text-align: center; }
+    .card { padding-top: 26px; padding-bottom: 30px; }
+    .chapter-two .panel { animation: none; }
+    .chapter-two .hero { height: 177px; margin: 5px -12px 19px; }
+    .chapter-two .motion-toggle { position: absolute; z-index: 4; right: 21px; top: 14px; margin: 0; }
+    .chapter-two h1 { font-size: 35px; font-size: clamp(29px, 7.7vw, 37px); line-height: 1.19; margin-bottom: 26px; }
+    .chapter-two h1 em { margin-top: 3px; }
+    .chapter-two .story { font-size: 14px; line-height: 1.85; max-width: 350px; margin-bottom: 20px; text-wrap: pretty; }
+    .chapter-two .story strong { color: #ffe6f3; font-weight: 600; }
+    .chapter-two .signature { color: #ffbadd; font: italic 19px/1.6 Georgia, serif; margin-top: 4px; }
+    .chapter-two .footnote { max-width: 300px; margin: 24px auto 0; padding-top: 20px; border-top: 1px solid #ed94c040; color: #edbcd5; font-size: 11px; line-height: 1.8; }
+    .chapter-two .reveal { animation: chapter-reveal .8s ease-out both; }
+    .chapter-two .card-pattern::after { background: linear-gradient(180deg, #21071944 0%, #21071977 18%, #210719da 36%, #210719ed 100%); }
+    .chapter-two .floating-heart { filter: none; animation-name: chapter-float; }
+    .chapter-two footer { font-size: 11px; }
+    @keyframes chapter-reveal { from { opacity: .86; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+    @keyframes chapter-float { 8% { opacity: .25; } 76% { opacity: .2; } 100% { opacity: 0; transform: translate3d(var(--drift), calc(-100vh - 180px), 0) rotate(30deg); } }
+    @media(max-width:400px) {
+      .chapter-two .card { padding: 25px 23px 26px; }
+      .chapter-two .hero { height: 169px; margin-bottom: 17px; }
+      .chapter-two .story { font-size: 13px; }
+      .chapter-two .signature { font-size: 18px; }
+      .chapter-two .brand { font-size: 10px; }
+      .chapter-two .chapter { font-size: 10px; }
+    }
+    @media(prefers-reduced-motion:reduce) { .chapter-two .reveal { animation: none; } }
+</style>
+</head>
+<body class="chapter-two">
+<!-- Те же изображения, что в первой главе: leopard-background.jpg и leopard-heart.png. -->
+<svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <defs>
+      <image id="heart-photo-source" x="0" y="0" width="6080" height="4160" href="leopard-heart.png"/>
+      <symbol id="heart-shape" viewBox="1457 707 3170 2842"><use href="#heart-photo-source"/></symbol>
+      <symbol id="heart-jewel" viewBox="1457 707 3170 2842"><use href="#heart-photo-source"/></symbol>
+      <symbol id="heart-leopard" viewBox="1457 707 3170 2842"><use href="#heart-photo-source"/></symbol>
+      <symbol id="heart-outline" viewBox="1457 707 3170 2842"><use href="#heart-photo-source"/></symbol>
+      <symbol id="sparkle" viewBox="0 0 24 24"><path d="M12 1C13.8 8.9 15.1 10.2 23 12 15.1 13.8 13.8 15.1 12 23 10.2 15.1 8.9 13.8 1 12 8.9 10.2 10.2 8.9 12 1Z" fill="currentColor"/></symbol>
+    </defs>
+  </svg>
+<div class="backdrop" aria-hidden="true"><div class="leopard-world"></div></div>
+<div class="ambient" id="ambient" aria-hidden="true"></div>
+<div class="frame">
+  <header class="masthead">
+    <span class="brand"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#heart-shape"/></svg>Для Алиночки</span>
+    <span class="chapter">Глава 02 · Увидеть невидимое</span>
+  </header>
+  <main class="card">
+    <div class="card-pattern" aria-hidden="true"></div>
+    <button class="motion-toggle" id="motion-toggle" type="button" aria-label="Выключить анимацию" aria-pressed="true" title="Выключить анимацию" hidden>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path id="motion-icon" d="M9 4v16M15 4v16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <section class="panel" aria-labelledby="chapter-title">
+      <div class="hero" aria-hidden="true">
+          <div class="hero-glow"></div><div class="hero-orbit"></div>
+          <div class="heart-main"><svg viewBox="0 0 100 100"><use href="#heart-jewel"/></svg></div>
+          <div class="heart-side"><svg viewBox="0 0 100 100"><use href="#heart-leopard"/></svg></div>
+          <div class="heart-outline"><svg viewBox="0 0 100 100"><use href="#heart-outline"/></svg></div>
+          <svg class="sparkle s1" viewBox="0 0 24 24"><use href="#sparkle"/></svg>
+          <svg class="sparkle s2" viewBox="0 0 24 24"><use href="#sparkle"/></svg>
+          <svg class="sparkle s3" viewBox="0 0 24 24"><use href="#sparkle"/></svg></div>
+      <h1 class="reveal" id="chapter-title">Самое интересное<br>не всегда видно<br><em>с первого взгляда.</em></h1>
+      <p class="story reveal"><strong>Ты профессионал в рендеринге.</strong><br>Умеешь видеть то, что скрыто от обычного взгляда.</p>
+      <p class="story reveal">Теперь у тебя есть всё,<br>чтобы заметить чуть больше.</p>
+      <p class="story reveal">Присмотрись к тому,<br>с чего началась эта история.</p>
+      <p class="signature reveal">Уверен, дальше ты разберёшься сама ♡</p>
+      <div class="footnote reveal">Некоторые страницы стоит увидеть<br>в другом свете.</div>
+    </section>
+  </main>
+  <footer>Продолжение нашей истории — в твоих руках.</footer>
+</div>
+<script>
+(function () {
+  'use strict';
+  var ambient = document.getElementById('ambient');
+  var button = document.getElementById('motion-toggle');
+  var reduced = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  var paused = false;
+  var timer = null;
+  var svgNS = 'http://www.w3.org/2000/svg';
+  function allowed() { return !paused && !reduced.matches && !document.hidden; }
+  function heart(initial) {
+    if (!allowed() || ambient.childElementCount >= 9) { return; }
+    var el = document.createElement('span');
+    el.className = 'floating-heart';
+    el.style.setProperty('--left', (Math.random() * 96) + '%');
+    el.style.setProperty('--size', (20 + Math.random() * 22) + 'px');
+    el.style.setProperty('--duration', (12 + Math.random() * 5) + 's');
+    el.style.setProperty('--drift', (Math.random() * 50 - 25) + 'px');
+    el.style.setProperty('--tilt', (Math.random() * 36 - 18) + 'deg');
+    if (initial) { el.style.animationDelay = '-' + (Math.random() * 9) + 's'; }
+    var svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('viewBox', '0 0 100 100');
+    var use = document.createElementNS(svgNS, 'use');
+    use.setAttribute('href', '#heart-jewel');
+    use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#heart-jewel');
+    svg.appendChild(use); el.appendChild(svg); ambient.appendChild(el);
+    function remove() { if (el.parentNode) { el.parentNode.removeChild(el); } }
+    var cleanup = window.setTimeout(remove, 18000);
+    el.addEventListener('animationend', function () { window.clearTimeout(cleanup); remove(); }, { once: true });
+  }
+  function sync() {
+    window.clearInterval(timer); timer = null;
+    var enabled = !paused && !reduced.matches;
+    document.body.classList.toggle('motion-paused', !enabled);
+    document.body.classList.toggle('page-hidden', document.hidden);
+    button.setAttribute('aria-pressed', String(enabled));
+    button.disabled = reduced.matches;
+    var label = reduced.matches ? 'Анимация выключена настройками устройства' : (enabled ? 'Выключить анимацию' : 'Включить анимацию');
+    button.setAttribute('aria-label', label); button.title = label;
+    document.getElementById('motion-icon').setAttribute('d', enabled ? 'M9 4v16M15 4v16' : 'M8 4l12 8-12 8V4Z');
+    if (!allowed()) { ambient.textContent = ''; return; }
+    if (!ambient.childElementCount) { for (var i = 0; i < 4; i++) { heart(true); } }
+    timer = window.setInterval(function () { heart(false); }, 2100);
+  }
+  button.hidden = false;
+  button.addEventListener('click', function () { paused = !paused; sync(); });
+  document.addEventListener('visibilitychange', sync);
+  window.addEventListener('pagehide', function () { window.clearInterval(timer); ambient.textContent = ''; });
+  window.addEventListener('pageshow', sync);
+  if (reduced.addEventListener) { reduced.addEventListener('change', sync); }
+  else if (reduced.addListener) { reduced.addListener(sync); }
+  var refs = document.querySelectorAll('use[href], image[href]');
+  for (var j = 0; j < refs.length; j++) { refs[j].setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', refs[j].getAttribute('href')); }
+  sync();
+}());
+</script>
+</body>
+</html>
